@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import optimization.OptVariables;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
@@ -157,7 +159,8 @@ public class MatchCaching {
 	
 	protected void whoStartedItMechanicsAltInit(double learningRate){
 		
-		rfParamSet = getPossibleRFParams(-1.5, 0.5, 9);
+		rfParamSet = getPossibleRFParams(-1.5, 0.5, 2);
+		//rfParamSet = getPossibleRFParams(-1.5, 0.5, 9);
 		//rfParamSet = (new RFParamVarEnumerator(-1, 3, 1., 4)).allRFs;
 		
 		objectiveReward = new TBFSStandardReward(1, -1, -.1, -2, new double[]{-2, 0, 2, 0, 0});
@@ -223,9 +226,7 @@ public class MatchCaching {
 					String res = this.getMatchResultString(v1, v2);
 					out.write(res);
 					out.write("\n");
-					
 				}
-				
 			}
 			
 			System.out.println("Finished.");
