@@ -24,16 +24,16 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
  * @author Adam Morris
  *
  */
-public class RSBExperiment {
+public class RSBExperiment implements Experiment {
 	
 	protected final int numParams = 8;
-	protected boolean runParallel = false;
+	protected boolean runParallel = true;
 	protected FHSingleStageNormalFormGame game;
 	protected SGDomain domain;
 	
 	protected static int numBonusVectors = 100; // this must be at least numParams + 1
 	protected static int numRoundsPerMatch = 1000;
-	protected static int numMatchesPerTourn = 50;
+	protected static int numMatchesPerTourn = 5000;
 	
 	protected boolean printStuff = false;
 	protected final int debugId = 0;
@@ -54,7 +54,8 @@ public class RSBExperiment {
 	protected String pathToResultCache;
 	
 	public static void main(String[] args) {
-		long startTime = System.nanoTime();
+		//long startTime = System.nanoTime();
+		//System.out.println(args[1]);
 		if(args.length != 1 && args.length != 2){
 			System.out.println("Wrong format. Use:\n\tpathToResultFolder (pathToVectorCache)");
 			System.exit(-1);
@@ -63,22 +64,71 @@ public class RSBExperiment {
 		// Set up payoff matrix
 		// Note: action 0 is cooperate, action 1 is defect
 		String[][] actionNames = new String[][]{{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME},{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME}};
-		double[][][] payoffMatrix = FHSingleStageNormalFormGame.getChickenPayoff();
+		double[][][] payoffMatrix = FHSingleStageNormalFormGame.getPDPayoff();
 
 		FHSingleStageNormalFormGame game = new FHSingleStageNormalFormGame(actionNames,payoffMatrix);
 
 		RSBExperiment experiment = new RSBExperiment(game);
 		
 		BonusVectorList bonusVectors;
-		if(args.length == 2) {
-			bonusVectors = new BonusVectorList(args[1],experiment.numParams);
+		// Does the bonus vector list exist already?
+		File file = new File(args[0]+"/vectors.txt");
+		//System.out.println(file.getAbsolutePath());
+		if (file.exists()) {
+			bonusVectors = new BonusVectorList(args[0]+"/vectors.txt",experiment.numParams);
 		} else {
 			bonusVectors = new BonusVectorList(numBonusVectors,experiment.numParams,experiment.game,0);
-			bonusVectors.writeVectorList(args[0]+"\\vectors.txt");
+			bonusVectors.writeVectorList(args[0]+"/vectors.txt");
+		}
+		
+		// Are we running on the grid?
+		// Should be 5250 games
+		if (args.length == 2) {
+			int tasknum = Integer.parseInt(args[1]); // 1-indexed
+			if (tasknum < 1 || tasknum > 5250) {
+				System.out.println("Error: Tasknum is out of range");
+				System.exit(-1);
+			}
+			
+			// Are we doing Q vs FHs?
+			if (tasknum <= numBonusVectors*2) {
+				double winnings[] = null;
+				String title = null;
+
+				if (tasknum <= numBonusVectors) { // First FH
+					winnings = experiment.runTourn_QvsFH(bonusVectors.getVector(tasknum),experiment.all0Factory);
+					title = ""+(tasknum)+"vAll0";
+				} else if (tasknum <= (numBonusVectors*2)) { // Second FH
+					tasknum = tasknum - 100;
+					winnings = experiment.runTourn_QvsFH(bonusVectors.getVector(tasknum),experiment.all1Factory);
+					title = ""+(tasknum)+"vAll1";
+				}
+				
+				experiment.writeResults(args[0]+"/"+title+".txt", winnings, title);
+			} else { // QvsQs
+				tasknum = tasknum - 200;
+				int start = 0;
+				int Q1 = 0;
+				int Q2 = 0;
+				for (int i = 1; i <= numBonusVectors; i++) {
+					start = (202-i)*(i-1)/2;
+					if (start < tasknum && tasknum <= (start+100-i+1)) {
+						Q1 = i;
+						break;
+					}
+				}
+				Q2 = tasknum - start - 1 + Q1;
+				double[][] winnings_tp = transpose(experiment.runTourn_QvsQ(bonusVectors.getVector(Q1),bonusVectors.getVector(Q2)));
+				String title1 = ""+Q1+"v"+Q2;
+				String title2 = ""+Q2+"v"+Q1;
+				
+				experiment.writeResults(args[0]+"/"+title1+".txt", winnings_tp[0], title1);
+				if (Q1!=Q2) experiment.writeResults(args[0]+"/"+title2+".txt", winnings_tp[1], title2);
+			}
 		}
 		
 		//double[] bonusVector = {100,100,100,100,0,0,0,0};
-		experiment.runTourn_QvsQ(bonusVectors.getVector(50),bonusVectors.getVector(50));
+		//experiment.runTourn_QvsQ(bonusVectors.getVector(8),bonusVectors.getVector(89));
 		//System.out.println(System.nanoTime() - experiment.startTime);
 		
 		/*List<double[]> bonusVectorList = new ArrayList<double[]>();
@@ -90,14 +140,14 @@ public class RSBExperiment {
 		
 		/*List<List<double[]>> winnings = experiment.runQAgainstAllsAndSelf(bonusVectors.getVectorList());
 		String[] titles = {"QvsAll0","QvsAll1","QvsSelf"};
-		experiment.writeResults(args[0]+"\\QAgainstAllsAndSelf.txt",winnings, titles);
+		experiment.writeResults(args[0]+"/QAgainstAllsAndSelf.txt",winnings, titles);
 		
 		List<List<double[]>> winnings2 = experiment.runQAgainstOtherQs(bonusVectors.getVectorList());
 		String[] titles2 = new String[numBonusVectors];
 		for (int i = 0; i < numBonusVectors; i++) titles2[i] = "Qvs"+i;
-		experiment.writeResults(args[0]+"\\QAgainstOtherQs.txt",winnings2, titles2);*/
+		experiment.writeResults(args[0]+"/QAgainstOtherQs.txt",winnings2, titles2);*/
 		
-		System.out.println(System.nanoTime() - startTime);
+		//System.out.println(System.nanoTime() - startTime);
 	}
 		
 	public RSBExperiment(FHSingleStageNormalFormGame game) {
@@ -117,7 +167,7 @@ public class RSBExperiment {
 			DPrint.toggleCode(this.debugId, true);
 		}
 		
-		this.r_max = this.game.getMaxPayout();
+		this.r_max = this.game.getMaxAbsPayout();
 		this.q_max = this.r_max / (1-this.gamma);
 		
 		this.q_init = (this.r_max+this.q_max)/2;
@@ -238,10 +288,10 @@ public class RSBExperiment {
 		Agent a1 = fixedFactory.generateAgent();
 
 		World w = game.createRepeatedGameWorld(domain, a0, a1);
-		
+		w.setDebugId(debugId);
+
 		//have our world run for 1000 time steps
 		w.runGame(numRoundsPerMatch);
-		w.setDebugId(debugId);
 		
 		//print final performance (as cumulative reward)
 		//System.out.println("Agent 0 scored: " + w.getCumulativeRewardForAgent(a0.getAgentName()));
@@ -253,7 +303,7 @@ public class RSBExperiment {
 		return w.getCumulativeRewardForAgent(a0.getAgentName());
 	}
 	
-	protected double[] runMatch_QvsQ(double[] bonusVector0, double[] bonusVector1) {
+	public double[] runMatch_QvsQ(double[] bonusVector0, double[] bonusVector1) {
 		// Create the subjective RF construct
 		RSBSubjectiveRF subjRF0 = new RSBSubjectiveRF(game.getJointRewardFunction(),bonusVector0);
 		RSBSubjectiveRF subjRF1 = new RSBSubjectiveRF(game.getJointRewardFunction(),bonusVector1);
@@ -337,6 +387,45 @@ public class RSBExperiment {
 		}
 	}
 	
+	/**
+	 * Writes the result of a single tournament.  This is useful for grid stuff.
+	 * @param path
+	 * @param winnings
+	 * @param winningTitle
+	 */
+	protected void writeResults(String path, double[] winnings, String winningTitle) {
+		// Print/write results
+		//DecimalFormat dec = new DecimalFormat("#.##");
+		BufferedWriter out = null;
+		File file = null;
+		
+		try {
+			file = new File(path);
+			// Don't want to override..
+			if (!file.exists()) {
+				out = new BufferedWriter(new FileWriter(path));
+				System.out.println("Writing results of " + winningTitle + " to file..");
+				
+				// Header
+				String toWrite = "vectorNum,"+winningTitle+"\n";
+				out.write(toWrite);
+	
+				DescriptiveStatistics stats = new DescriptiveStatistics(winnings);
+				String avg = String.valueOf(stats.getMean()); // only recording mean right now
+				out.write(avg);
+				System.out.println(avg);
+	
+				System.out.println("Finished");
+				out.close();
+			} else {
+				System.out.println("Output file already exists, did not write results of " + winningTitle + "");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
+	
 	protected static double[][] transpose(double[][] input) {
 		int size1 = input.length;
 		int size2 = input[0].length;
@@ -347,5 +436,10 @@ public class RSBExperiment {
 			}
 		}
 		return output;
+	}
+
+	@Override
+	public int getNumMatchesPerTourn() {
+		return this.numMatchesPerTourn;
 	}
 }

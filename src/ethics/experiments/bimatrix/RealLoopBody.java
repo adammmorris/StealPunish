@@ -2,7 +2,7 @@ package ethics.experiments.bimatrix;
 
 public class RealLoopBody implements LoopBody<Integer> {
 	public double[][] winnings;
-	protected RSBExperiment experiment;
+	protected Experiment experiment;
 	protected double[] bonusVector0;
 	protected double[] bonusVector1;
 	
@@ -13,8 +13,8 @@ public class RealLoopBody implements LoopBody<Integer> {
 		//System.out.println("Elapsed time (ending match " + i + "): " + (System.nanoTime() - experiment.startTime));
 	}
 
-	public RealLoopBody(RSBExperiment experiment, double[] bonusVector0, double[] bonusVector1) {
-		this.winnings = new double[experiment.numMatchesPerTourn][2];
+	public RealLoopBody(Experiment experiment, double[] bonusVector0, double[] bonusVector1) {
+		this.winnings = new double[experiment.getNumMatchesPerTourn()][2];
 		this.experiment = experiment;
 		this.bonusVector0 = bonusVector0;
 		this.bonusVector1 = bonusVector1;

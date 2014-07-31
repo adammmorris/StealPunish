@@ -1,17 +1,12 @@
 package ethics.experiments.bimatrix;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class Parallel
 {
-static final int iCPU = Runtime.getRuntime().availableProcessors()-1;
+static final int iCPU = Runtime.getRuntime().availableProcessors();
 
 public static <T> void ForEach(Iterable <T> parameters,
                    final LoopBody<T> loopBody)

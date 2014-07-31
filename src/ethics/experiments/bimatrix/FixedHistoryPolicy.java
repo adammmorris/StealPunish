@@ -1,16 +1,12 @@
 package ethics.experiments.bimatrix;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import burlap.behavior.singleagent.Policy;
-import burlap.oomdp.core.AbstractGroundedAction;
 import burlap.oomdp.core.ObjectInstance;
 import burlap.oomdp.core.State;
 import burlap.oomdp.stochasticgames.GroundedSingleAction;
-import burlap.oomdp.stochasticgames.JointAction;
 import burlap.oomdp.stochasticgames.SingleAction;
 
 public class FixedHistoryPolicy extends Policy {

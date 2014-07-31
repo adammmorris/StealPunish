@@ -17,9 +17,8 @@ import burlap.oomdp.stochasticgames.SGDomain;
 import burlap.oomdp.stochasticgames.SGStateGenerator;
 import burlap.oomdp.stochasticgames.World;
 import burlap.oomdp.stochasticgames.common.ConstantSGStateGenerator;
-import burlap.oomdp.stochasticgames.common.StaticRepeatedGameActionModel;
 
-public class FHSingleStageNormalFormGame extends SingleStageNormalFormGame implements DomainGenerator {
+public class FHSingleStageNormalFormGame extends SingleStageNormalFormGame implements DomainGenerator,GameGenerator {
 
 	public static final String ACTION0NAME = "action0";
 	public static final String ACTION1NAME = "action1";
@@ -146,7 +145,7 @@ public class FHSingleStageNormalFormGame extends SingleStageNormalFormGame imple
 		return -1;
 	}
 	
-	public static int getActionNumberFromSANumber(int SANumber) {
+	public int getActionNumberFromSANumber(int SANumber) {
 		if(SANumber <= 3) return 0;
 		else return 1;
 	}
@@ -155,6 +154,7 @@ public class FHSingleStageNormalFormGame extends SingleStageNormalFormGame imple
 	 * Returns the maximum payout possible for a given player taking a given action.
 	 * @return
 	 */
+	@Override
 	public double getMaxPayout(int playerNum, int actionNum) {
 		int[] profile0 = {actionNum,ACTION0NUMBER};
 		int[] profile1 = {actionNum,ACTION1NUMBER};
@@ -162,19 +162,32 @@ public class FHSingleStageNormalFormGame extends SingleStageNormalFormGame imple
 		return Math.max(getPayout(playerNum,profile0),getPayout(playerNum,profile1));
 	}
 	
+	public double getMaxAbsPayout(int playerNum, int actionNum) {
+		int[] profile0 = {actionNum,ACTION0NUMBER};
+		int[] profile1 = {actionNum,ACTION1NUMBER};
+		
+		return Math.max(Math.abs(getPayout(playerNum,profile0)),Math.abs(getPayout(playerNum,profile1)));
+	}
+	
 	/**
 	 * Returns the maximum payout possible for a given player.
 	 * @return
 	 */
+	@Override
 	public double getMaxPayout(int playerNum) {
 		return Math.max(getMaxPayout(playerNum,ACTION0NUMBER),getMaxPayout(playerNum,ACTION1NUMBER));
+	}
+	
+	public double getMaxAbsPayout(int playerNum) {
+		return Math.max(getMaxAbsPayout(playerNum,ACTION0NUMBER),getMaxAbsPayout(playerNum,ACTION1NUMBER));
 	}
 	
 	/**
 	 * Returns the maximum (absolute) payout in the game.
 	 * @return
 	 */
-	public double getMaxPayout() {
+	@Override
+	public double getMaxAbsPayout() {
 		double maxPayout = 0;
 		for (int i = 0; i < this.actionSets.size(); i++) {
 			for (int j = 0; j < this.actionSets.size(); j++) {

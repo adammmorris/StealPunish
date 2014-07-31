@@ -2,9 +2,6 @@ package ethics.experiments.bimatrix;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import ethics.experiments.bimatrix.FixedHistoryPolicy.SingleActionPair;
 import burlap.oomdp.core.State;
 import burlap.oomdp.stochasticgames.Agent;
 import burlap.oomdp.stochasticgames.AgentFactory;
@@ -46,6 +43,7 @@ public class FixedHistory extends Agent {
 	 * @param domain the domain in which this agent will play.
 	 * @param coop the cooperate action for both players
 	 * @param defect the defect action for both players
+	 * @param policyIn Map from state numbers to actions
 	 */
 	public FixedHistory(SGDomain domain, SingleAction act0, SingleAction act1, HashMap<Integer,SingleAction> policyIn, SingleAction firstMove){
 		this.init(domain);
@@ -57,6 +55,14 @@ public class FixedHistory extends Agent {
 		this.policy = new FixedHistoryPolicy(policyIn, firstMove);
 	}
 	
+	/**
+	 * 
+	 * @param domain
+	 * @param act0
+	 * @param act1
+	 * @param policyIn
+	 * @param firstMove
+	 */
 	public FixedHistory(SGDomain domain, SingleAction act0, SingleAction act1, int[] policyIn, SingleAction firstMove){
 		this.init(domain);
 		

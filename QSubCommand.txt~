@@ -1,0 +1,1 @@
+qsub -t 1-5250 -l vf=4G -o /dev/null -e /dev/null myScript.sh
