@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import burlap.behavior.singleagent.ValueFunctionInitialization;
@@ -32,7 +33,7 @@ public class RSBExperiment implements Experiment {
 	protected SGDomain domain;
 	
 	protected static int numBonusVectors = 100; // this must be at least numParams + 1
-	protected static int numRoundsPerMatch = 1000;
+	protected static int numRoundsPerMatch = 2500;
 	protected static int numMatchesPerTourn = 5000;
 	
 	protected boolean printStuff = false;
@@ -64,7 +65,7 @@ public class RSBExperiment implements Experiment {
 		// Set up payoff matrix
 		// Note: action 0 is cooperate, action 1 is defect
 		String[][] actionNames = new String[][]{{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME},{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME}};
-		double[][][] payoffMatrix = FHSingleStageNormalFormGame.getPDPayoff();
+		double[][][] payoffMatrix = FHSingleStageNormalFormGame.getChickenPayoff();
 
 		FHSingleStageNormalFormGame game = new FHSingleStageNormalFormGame(actionNames,payoffMatrix);
 
@@ -77,7 +78,25 @@ public class RSBExperiment implements Experiment {
 		if (file.exists()) {
 			bonusVectors = new BonusVectorList(args[0]+"/vectors.txt",experiment.numParams);
 		} else {
-			bonusVectors = new BonusVectorList(numBonusVectors,experiment.numParams,experiment.game,0);
+			HashMap<Integer,Integer> paramToActionNum = new HashMap<Integer,Integer>();
+			paramToActionNum.put(0, 0);
+			paramToActionNum.put(1, 0);
+			paramToActionNum.put(2, 0);
+			paramToActionNum.put(3, 0);
+			paramToActionNum.put(4, 1);
+			paramToActionNum.put(5, 1);
+			paramToActionNum.put(6, 1);
+			paramToActionNum.put(7, 1);
+			HashMap<Integer,Integer> paramToPlayerNum = new HashMap<Integer,Integer>();
+			paramToActionNum.put(0, 0);
+			paramToActionNum.put(1, 0);
+			paramToActionNum.put(2, 0);
+			paramToActionNum.put(3, 0);
+			paramToActionNum.put(4, 0);
+			paramToActionNum.put(5, 0);
+			paramToActionNum.put(6, 0);
+			paramToActionNum.put(7, 0);
+			bonusVectors = new BonusVectorList(numBonusVectors,experiment.numParams,experiment.game,paramToPlayerNum,paramToActionNum);
 			bonusVectors.writeVectorList(args[0]+"/vectors.txt");
 		}
 		
@@ -440,6 +459,6 @@ public class RSBExperiment implements Experiment {
 
 	@Override
 	public int getNumMatchesPerTourn() {
-		return this.numMatchesPerTourn;
+		return numMatchesPerTourn;
 	}
 }
