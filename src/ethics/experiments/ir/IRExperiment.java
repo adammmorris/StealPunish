@@ -36,6 +36,8 @@ public class IRExperiment implements Experiment {
 	 */
 	private boolean practice = false; // set this to true if we're doing practice stuff, otherwise set to false
 	
+	private static String dirSep = "/"; // set this to \ if on windows..
+	
 	protected final int numParams = 2;
 	protected boolean runParallel = false;
 	protected IRGame game;
@@ -70,6 +72,8 @@ public class IRExperiment implements Experiment {
 			System.out.println("Wrong format. Use:\n\tpathToResultFolder (pathToVectorCache)");
 			System.exit(-1);
 		}
+		
+		args[0] = args[0]+dirSep;
 		
 		// Set up the payoffs
 		// STEAL-PUNISH
