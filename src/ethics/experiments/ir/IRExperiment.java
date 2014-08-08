@@ -34,7 +34,7 @@ public class IRExperiment implements Experiment {
 	/**
 	 * SET THIS TO false BEFORE RUNNING FOR REAL
 	 */
-	private boolean practice = true; // set this to true if we're doing practice stuff, otherwise set to false
+	private boolean practice = false; // set this to true if we're doing practice stuff, otherwise set to false
 	
 	protected final int numParams = 2;
 	protected boolean runParallel = false;
