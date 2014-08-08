@@ -34,7 +34,7 @@ public class IRExperiment implements Experiment {
 	/**
 	 * SET THIS TO false BEFORE RUNNING FOR REAL
 	 */
-	private boolean practice = false; // set this to true if we're doing practice stuff, otherwise set to false
+	private boolean practice = true; // set this to true if we're doing practice stuff, otherwise set to false
 	
 	protected final int numParams = 2;
 	protected boolean runParallel = false;
@@ -89,10 +89,10 @@ public class IRExperiment implements Experiment {
 		
 		BonusVectorList bonusVectors;
 		// Does the bonus vector list exist already?
-		File file = new File(args[0]+"/vectors.txt");
+		File file = new File(args[0]+"vectors.txt");
 		//System.out.println(file.getAbsolutePath());
 		if (file.exists()) {
-			bonusVectors = new BonusVectorList(args[0]+"/vectors.txt",experiment.numParams);
+			bonusVectors = new BonusVectorList(args[0]+"vectors.txt",experiment.numParams);
 		} else {
 			HashMap<Integer,Integer> paramToActionNum = new HashMap<Integer,Integer>();
 			paramToActionNum.put(0, 1);
@@ -101,7 +101,7 @@ public class IRExperiment implements Experiment {
 			paramToPlayerNum.put(0, 0);
 			paramToPlayerNum.put(1, 1);
 			bonusVectors = new BonusVectorList(experiment.numBonusVectors,experiment.numParams,experiment.game,paramToPlayerNum,paramToActionNum);
-			bonusVectors.writeVectorList(args[0]+"/vectors.txt");
+			bonusVectors.writeVectorList(args[0]+"vectors.txt");
 		}
 		
 		// Are we running on the grid?
@@ -127,7 +127,7 @@ public class IRExperiment implements Experiment {
 					title = ""+(tasknum)+"vAll1";
 				}
 				
-				experiment.writeResults(args[0]+"/"+title+".txt", winnings, title);
+				experiment.writeResults(args[0]+title+".txt", winnings, title);
 			} else { // QvsQs
 				tasknum = tasknum - 200;
 				int start = 0;
@@ -145,8 +145,8 @@ public class IRExperiment implements Experiment {
 				String title1 = ""+Q1+"v"+Q2;
 				String title2 = ""+Q2+"v"+Q1;
 				
-				experiment.writeResults(args[0]+"/"+title1+".txt", winnings_tp[0], title1);
-				if (Q1!=Q2) experiment.writeResults(args[0]+"/"+title2+".txt", winnings_tp[1], title2);
+				experiment.writeResults(args[0]+title1+".txt", winnings_tp[0], title1);
+				if (Q1!=Q2) experiment.writeResults(args[0]+title2+".txt", winnings_tp[1], title2);
 			}
 		}
 		
@@ -154,9 +154,10 @@ public class IRExperiment implements Experiment {
 		//experiment.runTourn_QvsQ(bonusVectors.getVector(8),bonusVectors.getVector(89));
 		//System.out.println(System.nanoTime() - experiment.startTime);
 		
-		/*double[] bonusVector = {0,0};
-		double[] bonusVector2 = {0,0};
-		experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);*/
+		/*double[] bonusVector = {.75,-2.5};
+		double[] bonusVector2 = {.75,-2.5};
+		//experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);
+		experiment.runTourn_QvsQ(bonusVector, bonusVector2);*/
 		
 		/*List<double[]> bonusVectorList = new ArrayList<double[]>();
 		double[] bonusVector1 = {100,100,100,100,0,0,0,0};
@@ -190,7 +191,7 @@ public class IRExperiment implements Experiment {
 		if (this.practice) {
 			// PRACTICE NUMBERS
 			this.numBonusVectors = 100;
-			this.numRoundsPerMatch = 2500;
+			this.numRoundsPerMatch = 2000;
 			this.numMatchesPerTourn = 1;
 			
 			this.printStuff = true;
@@ -213,7 +214,7 @@ public class IRExperiment implements Experiment {
 		this.r_max = this.game.getMaxAbsPayout();
 		this.q_max = this.r_max / (1-this.gamma);
 		
-		this.q_init = (this.r_max+this.q_max)/2;
+		this.q_init = (this.r_max+this.q_max)/50;
 		
 		// Set up Q-factory
 		this.qFactory = new SGQFactory(domain, gamma, lr, q_init, new DiscreteStateHashFactory());
