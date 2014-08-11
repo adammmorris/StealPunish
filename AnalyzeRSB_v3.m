@@ -15,9 +15,9 @@
 
 %% Script
 
-addpath '/home/amm4/git/generalResearch';
-basePath = '/home/amm4/git/generalResearch/output/RSBOutput/PD5/';
-%basePath = 'C:\Personal\School\Brown\Psychology\Thesis\Code\Output\IRExperiment\ShareReciprocate2\';
+%addpath '/home/amm4/git/generalResearch';
+%basePath = '/home/amm4/git/generalResearch/output/RSBOutput/PD5/';
+basePath = 'C:\Personal\School\Brown\Psychology\Thesis\Code\generalResearch\output\IROutput\ShareReciprocate3\';
 path_QvsFH = strcat(basePath,'QAgainstAllsAndSelf.txt');
 path_QvsQ = strcat(basePath,'QAgainstOtherQs.txt');
 path_vectors = strcat(basePath,'vectors.txt');

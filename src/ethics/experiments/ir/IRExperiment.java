@@ -158,8 +158,8 @@ public class IRExperiment implements Experiment {
 		//experiment.runTourn_QvsQ(bonusVectors.getVector(8),bonusVectors.getVector(89));
 		//System.out.println(System.nanoTime() - experiment.startTime);
 		
-		/*double[] bonusVector = {.75,-2.5};
-		double[] bonusVector2 = {.75,-2.5};
+		/*double[] bonusVector = {.26,1.75};
+		double[] bonusVector2 = {.26,1.75};
 		//experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);
 		experiment.runTourn_QvsQ(bonusVector, bonusVector2);*/
 		
@@ -195,7 +195,7 @@ public class IRExperiment implements Experiment {
 		if (this.practice) {
 			// PRACTICE NUMBERS
 			this.numBonusVectors = 100;
-			this.numRoundsPerMatch = 2000;
+			this.numRoundsPerMatch = 2500;
 			this.numMatchesPerTourn = 1;
 			
 			this.printStuff = true;
