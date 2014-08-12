@@ -17,7 +17,7 @@
 
 %addpath '/home/amm4/git/generalResearch';
 %basePath = '/home/amm4/git/generalResearch/output/RSBOutput/PD5/';
-basePath = 'C:\Personal\School\Brown\Psychology\Thesis\Code\generalResearch\output\IROutput\ShareReciprocate3\';
+basePath = 'C:\Personal\School\Brown\Psychology\Thesis\Code\generalResearch\output\IROutput\ShareReciprocate4\';
 path_QvsFH = strcat(basePath,'QAgainstAllsAndSelf.txt');
 path_QvsQ = strcat(basePath,'QAgainstOtherQs.txt');
 path_vectors = strcat(basePath,'vectors.txt');
@@ -134,5 +134,5 @@ save(path_save);
 
 %% MAKE THE PLOT
 
-plotType = 3;
+plotType = 1;
 makePlot(plotType,vectorScores,vectorScores_ownWorld,ESS,bestESS,vectors,xrange);

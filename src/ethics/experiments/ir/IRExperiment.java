@@ -34,7 +34,7 @@ public class IRExperiment implements Experiment {
 	/**
 	 * SET THIS TO false BEFORE RUNNING FOR REAL
 	 */
-	private boolean practice = false; // set this to true if we're doing practice stuff, otherwise set to false
+	private boolean practice = true; // set this to true if we're doing practice stuff, otherwise set to false
 	
 	private static String dirSep = "/"; // set this to \ if on windows..
 	
@@ -77,16 +77,16 @@ public class IRExperiment implements Experiment {
 		
 		// Set up the payoffs
 		// STEAL-PUNISH
-		/*double initiatorReward = 1;
+		double initiatorReward = 1;
 		double initiateeReward = -1;
 		double responderReward = -.5;
-		double respondeeReward = -2.5;*/
+		double respondeeReward = -2.5;
 		
 		// SHARE-RECIPROCATE
-		double initiatorReward = -.5;
+		/*double initiatorReward = -.5;
 		double initiateeReward = 1;
 		double responderReward = -.5;
-		double respondeeReward = 1;
+		double respondeeReward = 1;*/
 		
 		IRGame game = new IRGame(initiatorReward,initiateeReward,responderReward,respondeeReward);
 		IRExperiment experiment = new IRExperiment(game);
@@ -159,7 +159,7 @@ public class IRExperiment implements Experiment {
 		//System.out.println(System.nanoTime() - experiment.startTime);
 		
 		/*double[] bonusVector = {.26,1.75};
-		double[] bonusVector2 = {.26,1.75};
+		double[] bonusVector2 = {.56,-2};
 		//experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);
 		experiment.runTourn_QvsQ(bonusVector, bonusVector2);*/
 		
