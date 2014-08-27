@@ -27,16 +27,20 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
  */
 public class RSBExperiment implements Experiment {
 	
+	private boolean practice = false;
+	
+	private static String dirSep = "/"; // set this to \ if on windows..
+
 	protected final int numParams = 8;
 	protected boolean runParallel = true;
 	protected FHSingleStageNormalFormGame game;
 	protected SGDomain domain;
 	
-	protected static int numBonusVectors = 100; // this must be at least numParams + 1
-	protected static int numRoundsPerMatch = 2500;
-	protected static int numMatchesPerTourn = 5000;
+	public int numBonusVectors; // this must be at least numParams + 1
+	public int numRoundsPerMatch;
+	public int numMatchesPerTourn ;
 	
-	protected boolean printStuff = false;
+	protected boolean printStuff;
 	protected final int debugId = 0;
 	
 	protected double gamma;
@@ -62,6 +66,8 @@ public class RSBExperiment implements Experiment {
 			System.exit(-1);
 		}
 		
+		args[0] = args[0]+dirSep;
+		
 		// Set up payoff matrix
 		// Note: action 0 is cooperate, action 1 is defect
 		String[][] actionNames = new String[][]{{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME},{FHSingleStageNormalFormGame.ACTION0NAME, FHSingleStageNormalFormGame.ACTION1NAME}};
@@ -73,10 +79,10 @@ public class RSBExperiment implements Experiment {
 		
 		BonusVectorList bonusVectors;
 		// Does the bonus vector list exist already?
-		File file = new File(args[0]+"/vectors.txt");
+		File file = new File(args[0]+"vectors.txt");
 		//System.out.println(file.getAbsolutePath());
 		if (file.exists()) {
-			bonusVectors = new BonusVectorList(args[0]+"/vectors.txt",experiment.numParams);
+			bonusVectors = new BonusVectorList(args[0]+"vectors.txt",experiment.numParams);
 		} else {
 			HashMap<Integer,Integer> paramToActionNum = new HashMap<Integer,Integer>();
 			paramToActionNum.put(0, 0);
@@ -88,21 +94,21 @@ public class RSBExperiment implements Experiment {
 			paramToActionNum.put(6, 1);
 			paramToActionNum.put(7, 1);
 			HashMap<Integer,Integer> paramToPlayerNum = new HashMap<Integer,Integer>();
-			paramToActionNum.put(0, 0);
-			paramToActionNum.put(1, 0);
-			paramToActionNum.put(2, 0);
-			paramToActionNum.put(3, 0);
-			paramToActionNum.put(4, 0);
-			paramToActionNum.put(5, 0);
-			paramToActionNum.put(6, 0);
-			paramToActionNum.put(7, 0);
-			bonusVectors = new BonusVectorList(numBonusVectors,experiment.numParams,experiment.game,paramToPlayerNum,paramToActionNum);
-			bonusVectors.writeVectorList(args[0]+"/vectors.txt");
+			paramToPlayerNum.put(0, 0);
+			paramToPlayerNum.put(1, 0);
+			paramToPlayerNum.put(2, 0);
+			paramToPlayerNum.put(3, 0);
+			paramToPlayerNum.put(4, 0);
+			paramToPlayerNum.put(5, 0);
+			paramToPlayerNum.put(6, 0);
+			paramToPlayerNum.put(7, 0);
+			bonusVectors = new BonusVectorList(experiment.numBonusVectors,experiment.numParams,experiment.game,paramToPlayerNum,paramToActionNum);
+			bonusVectors.writeVectorList(args[0]+"vectors.txt");
 		}
 		
 		// Are we running on the grid?
 		// Should be 5250 games
-		if (args.length == 2) {
+		/*if (args.length == 2) {
 			int tasknum = Integer.parseInt(args[1]); // 1-indexed
 			if (tasknum < 1 || tasknum > 5250) {
 				System.out.println("Error: Tasknum is out of range");
@@ -110,26 +116,26 @@ public class RSBExperiment implements Experiment {
 			}
 			
 			// Are we doing Q vs FHs?
-			if (tasknum <= numBonusVectors*2) {
+			if (tasknum <= experiment.numBonusVectors*2) {
 				double winnings[] = null;
 				String title = null;
 
-				if (tasknum <= numBonusVectors) { // First FH
+				if (tasknum <= experiment.numBonusVectors) { // First FH
 					winnings = experiment.runTourn_QvsFH(bonusVectors.getVector(tasknum),experiment.all0Factory);
 					title = ""+(tasknum)+"vAll0";
-				} else if (tasknum <= (numBonusVectors*2)) { // Second FH
+				} else if (tasknum <= (experiment.numBonusVectors*2)) { // Second FH
 					tasknum = tasknum - 100;
 					winnings = experiment.runTourn_QvsFH(bonusVectors.getVector(tasknum),experiment.all1Factory);
 					title = ""+(tasknum)+"vAll1";
 				}
 				
-				experiment.writeResults(args[0]+"/"+title+".txt", winnings, title);
+				experiment.writeResults(args[0]+title+".txt", winnings, title);
 			} else { // QvsQs
 				tasknum = tasknum - 200;
 				int start = 0;
 				int Q1 = 0;
 				int Q2 = 0;
-				for (int i = 1; i <= numBonusVectors; i++) {
+				for (int i = 1; i <= experiment.numBonusVectors; i++) {
 					start = (202-i)*(i-1)/2;
 					if (start < tasknum && tasknum <= (start+100-i+1)) {
 						Q1 = i;
@@ -141,14 +147,19 @@ public class RSBExperiment implements Experiment {
 				String title1 = ""+Q1+"v"+Q2;
 				String title2 = ""+Q2+"v"+Q1;
 				
-				experiment.writeResults(args[0]+"/"+title1+".txt", winnings_tp[0], title1);
-				if (Q1!=Q2) experiment.writeResults(args[0]+"/"+title2+".txt", winnings_tp[1], title2);
+				experiment.writeResults(args[0]+title1+".txt", winnings_tp[0], title1);
+				if (Q1!=Q2) experiment.writeResults(args[0]+title2+".txt", winnings_tp[1], title2);
 			}
-		}
+		}*/
 		
 		//double[] bonusVector = {100,100,100,100,0,0,0,0};
 		//experiment.runTourn_QvsQ(bonusVectors.getVector(8),bonusVectors.getVector(89));
 		//System.out.println(System.nanoTime() - experiment.startTime);
+		
+		double[] bonusVector1 = {100,100,100,100,0,0,0,0};
+		double[] bonusVector2 = {0,0,0,0,100,100,100,100};
+		//experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);
+		experiment.runTourn_QvsQ(bonusVector1, bonusVector2);
 		
 		/*List<double[]> bonusVectorList = new ArrayList<double[]>();
 		double[] bonusVector1 = {100,100,100,100,0,0,0,0};
@@ -179,6 +190,22 @@ public class RSBExperiment implements Experiment {
 		this.lr = .1;
 		this.epsilon = .1;
 				
+		if (this.practice) {
+			// PRACTICE NUMBERS
+			this.numBonusVectors = 100;
+			this.numRoundsPerMatch = 2500;
+			this.numMatchesPerTourn = 1;
+			
+			this.printStuff = true;
+		} else {
+			// REAL NUMBERS
+			this.numBonusVectors = 100;
+			this.numRoundsPerMatch = 2500;
+			this.numMatchesPerTourn = 5000;
+			
+			this.printStuff = false;
+		}
+		
 		// Set up printing stuff
 		if (!this.printStuff) {
 			DPrint.toggleCode(this.debugId, false);
@@ -189,7 +216,7 @@ public class RSBExperiment implements Experiment {
 		this.r_max = this.game.getMaxAbsPayout();
 		this.q_max = this.r_max / (1-this.gamma);
 		
-		this.q_init = (this.r_max+this.q_max)/2;
+		this.q_init = (this.r_max+this.q_max)/50;
 		
 		// Set up Q-factory
 		this.qFactory = new SGQWActionHistoryFactory(domain, gamma, lr, new DiscreteStateHashFactory(), 1);
