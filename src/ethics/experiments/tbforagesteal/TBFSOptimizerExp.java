@@ -50,9 +50,9 @@ public class TBFSOptimizerExp {
 		//optimiztionFullGenome(args);
 		//controlledGATest();
 		//optimiztionInfiniteGA(args);
-		optimiztionInfiniteGASoftMax(args);
+		//optimiztionInfiniteGASoftMax(args);
 		
-		
+		optimiztionInfiniteGASoftMax_mutation(args);
 	}
 	
 	
@@ -155,6 +155,27 @@ public class TBFSOptimizerExp {
 		String outputPath = args[3];
 		
 		runInfinteGASoftMax(nGAGen, temperature, cacheFileInput, outputPath);
+		
+		
+	}
+	
+	public static void optimiztionInfiniteGASoftMax_mutation(String [] args){
+		
+		if(args.length != 5){
+			System.out.println("Error: Incorrect format");
+			System.out.println("\tnGAGenerations temperature cacheFileInput outputFilePath mutationRate");
+			System.exit(-1);
+		}
+		
+		DPrint.toggleCode(InfGASoftMaxReproduce.debugCode, false);
+		
+		int nGAGen = Integer.parseInt(args[0]);
+		double temperature = Double.parseDouble(args[1]);
+		String cacheFileInput = args[2];
+		String outputPath = args[3];
+		double mutation = Double.parseDouble(args[4]);
+		
+		runInfinteGASoftMax_mutation(nGAGen, temperature, cacheFileInput, outputPath,mutation);
 		
 		
 	}
@@ -286,7 +307,7 @@ public class TBFSOptimizerExp {
 		//RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1.5, 2.5, 0.5, 2);
 		//RFParamVarEnumerator rfenum = new RFParamVarEnumerator(0, 1, 1, 5);
 		//RFParamVarEnumerator rfenum = new RFParamVarEnumerator(0, 1, 1, 7);
-		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1.5, -1.0, .5, 3);
+		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1.5,1.5,.5,2);
 		
 		
 		//List<OptVariables> selectHCAgents = rfenum.allRFs;
@@ -334,6 +355,32 @@ public class TBFSOptimizerExp {
 		
 		System.out.println("Finished\n-----------------------------");
 		
+		
+	}
+	
+	public static void runInfinteGASoftMax_mutation(int nGenerations, double temperature, String cacheFilePath, String outputPath, double mutation){
+		
+		System.out.println("Parsing CacheFile");
+		InfGACachedVarEval eval = new InfGACachedVarEval(cacheFilePath);
+		System.out.println("Finished Parsing CacheFile and starting GA");
+		
+		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1.5,1.5,.5,2);
+		
+		InfiniteGA ga = new InfiniteGA(eval, new InfGASoftMaxReproduce(temperature,mutation), new RatioKillWorst(), rfenum.allRFs, nGenerations);
+		eval.setInfGA(ga);
+		
+		OVarStringRep rep = new OVarStringRep() {
+			
+			@Override
+			public String getStringRep(OptVariables vars) {
+				return vars.toString();
+			}
+		};
+		ga.enableOptimzationFileRecording(2, rep, outputPath);
+
+		ga.optimize();
+		
+		System.out.println("Finished\n-----------------------------");
 		
 	}
 	

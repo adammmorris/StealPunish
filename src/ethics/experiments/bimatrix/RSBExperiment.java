@@ -108,7 +108,7 @@ public class RSBExperiment implements Experiment {
 		
 		// Are we running on the grid?
 		// Should be 5250 games
-		/*if (args.length == 2) {
+		if (args.length == 2) {
 			int tasknum = Integer.parseInt(args[1]); // 1-indexed
 			if (tasknum < 1 || tasknum > 5250) {
 				System.out.println("Error: Tasknum is out of range");
@@ -150,16 +150,16 @@ public class RSBExperiment implements Experiment {
 				experiment.writeResults(args[0]+title1+".txt", winnings_tp[0], title1);
 				if (Q1!=Q2) experiment.writeResults(args[0]+title2+".txt", winnings_tp[1], title2);
 			}
-		}*/
+		}
 		
 		//double[] bonusVector = {100,100,100,100,0,0,0,0};
 		//experiment.runTourn_QvsQ(bonusVectors.getVector(8),bonusVectors.getVector(89));
 		//System.out.println(System.nanoTime() - experiment.startTime);
 		
-		double[] bonusVector1 = {100,100,100,100,0,0,0,0};
+		/*double[] bonusVector1 = {100,100,100,100,0,0,0,0};
 		double[] bonusVector2 = {0,0,0,0,100,100,100,100};
 		//experiment.runTourn_QvsFH(bonusVector, experiment.all1Factory);
-		experiment.runTourn_QvsQ(bonusVector1, bonusVector2);
+		experiment.runTourn_QvsQ(bonusVector1, bonusVector2);*/
 		
 		/*List<double[]> bonusVectorList = new ArrayList<double[]>();
 		double[] bonusVector1 = {100,100,100,100,0,0,0,0};

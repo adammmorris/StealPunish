@@ -1,17 +1,19 @@
 package ethics.experiments.tbforagesteal.matchcaching;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import optimization.OptVariables;
 import burlap.behavior.statehashing.DiscreteStateHashFactory;
 import burlap.behavior.stochasticgame.agents.naiveq.SGQFactory;
 import burlap.debugtools.DPrint;
+import burlap.domain.stochasticgames.normalform.SingleStageNormalFormGame;
+import burlap.oomdp.auxiliary.common.NullTermination;
 import burlap.oomdp.singleagent.common.SinglePFTF;
 import burlap.oomdp.stochasticgames.AgentFactory;
 import burlap.oomdp.stochasticgames.AgentType;
@@ -30,10 +32,15 @@ import domain.stocasticgames.foragesteal.TBFSWhoStartedMechanics;
 import domain.stocasticgames.foragesteal.TBForageSteal;
 import domain.stocasticgames.foragesteal.TBForageStealFAbstraction;
 import ethics.ParameterizedRFFactory;
+import ethics.experiments.ir.IRDomain;
+import ethics.experiments.ir.IRGame;
+import ethics.experiments.ir.IRJAM;
+import ethics.experiments.ir.IRStateGenerator;
 import ethics.experiments.tbforagesteal.auxiliary.RFParamVarEnumerator;
 import ethics.experiments.tbforagesteal.auxiliary.TBFSSubRFFactory;
 import ethics.experiments.tbforagesteal.auxiliary.TBFSSubRFWSFactory;
 import ethics.experiments.tbforagesteal.auxiliary.TBFSSubRFWSFactory4P;
+import ethics.experiments.ir.IRSubjectiveRF.IRSubjectiveRFFactory;
 
 public class MatchCaching {
 
@@ -48,7 +55,7 @@ public class MatchCaching {
 	
 	protected int									nTries;
 	protected int									nGames;
-	
+	protected int									numVectors;
 	
 	
 	
@@ -60,10 +67,12 @@ public class MatchCaching {
 	 */
 	public static void main(String[] args) {
 		
+		long start = System.nanoTime();
 		
-		if(args.length != 2 && args.length != 3){
+		if(args.length != 2 && args.length != 3 && args.length != 4){
 			System.out.println("Wrong format. For full cache use:\n\tpathToCacheOutput learningRate\nFor row cache use:\n\t" +
-								"pathToOutputDirectory learningRate cacheMatrixRow");
+								"pathToOutputDirectory learningRate cacheMatrixRow\nFor grid cache use:\n\tpathToOutputDirectory learningRate 0 tasknum\n" +
+								"For grid compilation use:\n\tpathToOutputDirectory learningRate 0 0");
 			System.exit(-1);
 		}
 		
@@ -71,20 +80,25 @@ public class MatchCaching {
 		DPrint.toggleCode(25633, false); //tournament printing debug code
 		
 		String outputFile = args[0];
+		
 		double lr = Double.parseDouble(args[1]);
-		
 		MatchCaching mc = new MatchCaching(lr);
-		
+
 		System.out.println("Beginning");
 		if(args.length == 2){
 			mc.cacheAll(outputFile);
 		}
-		else{
+		else if(args.length == 3){
 			int row = Integer.parseInt(args[2]);
 			mc.cacheRow(outputFile, row);
 		}
-	
-
+		else if(args.length==4){
+			int tasknum = Integer.parseInt(args[3]);
+			if (tasknum != 0) mc.cacheGrid(outputFile, tasknum);
+			else mc.compileGridOutput(outputFile,"Cache.txt");
+		}
+		
+		System.out.println("Elapsed time: " + (System.nanoTime()-start));
 	}
 	
 	
@@ -95,9 +109,9 @@ public class MatchCaching {
 		
 		//this.standardGameMechanicsInit(learningRate);
 		//this.whoStartedItMechanicsInit(learningRate);
-		this.whoStartedItMechanicsAltInit(learningRate);
-		
-		
+		//this.whoStartedItMechanicsAltInit(learningRate);
+		//this.shareReciprocateInit(learningRate);
+		this.stealPunishInit(learningRate);
 	}
 	
 	
@@ -187,6 +201,42 @@ public class MatchCaching {
 		
 	}
 	
+	protected void stealPunishInit(double learningRate){
+		
+		//IRGame game = new IRGame(1,-1,-.5,-2.5);
+		IRGame game = new IRGame(-.5,1,-.5,1);
+		
+		//rfParamSet = getPossibleRFParams(-1.5, 0.5, 2);
+		//rfParamSet = getPossibleRFParams(-1.5, 0.5, 9);
+		rfParamSet = (new RFParamVarEnumerator(-1.5,1.5,.5,2)).allRFs;
+		this.numVectors = this.rfParamSet.size();
+		
+		//objectiveReward = new TBFSStandardReward(1, -1, -.1, -2, new double[]{-2, 0, 2, 0, 0});
+		objectiveReward = game.getJointRewardFunction();
+		this.nTries = 25;
+		this.nGames = 1000;
+		this.rewardFactory = new IRSubjectiveRFFactory(objectiveReward);
+		//this.rewardFactory = new TBFSSubRFWSFactory4P(objectiveReward);
+		
+		//TBForageSteal gen = new TBForageSteal();
+		//gen.setNoopInFirstState(false);
+		//SGDomain domain = (SGDomain) gen.generateDomain();
+		SGDomain domain = (SGDomain)game.generateDomain();
+		
+		DiscreteStateHashFactory hashingFactory = new DiscreteStateHashFactory();
+		hashingFactory.setAttributesForClass(IRDomain.CLASSPLAYER, domain.getObjectClass(IRDomain.CLASSPLAYER).attributeList);
+		
+		double discount = 0.99;
+		
+		// I got rid of the state abstraction.. is it necessary?
+		baseFactory = new SGQFactory(domain, discount, learningRate, 1.5, hashingFactory);
+		
+		worldGenerator = new ConstantWorldGenerator(domain, new IRJAM(), objectiveReward, 
+				new NullTermination(), new IRStateGenerator(domain));
+		
+		fsAgentType = SingleStageNormalFormGame.getAgentTypeForAllPlayers(domain);
+		
+	}
 	
 	public List<OptVariables> getPossibleRFParams(double low, double interval, int nItervals){
 		
@@ -239,6 +289,120 @@ public class MatchCaching {
 			System.exit(-1);
 		}
 		
+		
+	}
+	
+	protected void cacheGrid(String outputDirectoryPath,int tasknum){
+		
+		if(!outputDirectoryPath.endsWith("/")){
+			outputDirectoryPath = outputDirectoryPath + "/";
+		}
+		
+		String res = "";
+		String pathName = "";
+		
+		int numFixedStrats = 0; // Ignoring fixed strats right now
+		
+		// The max tasknum should be n(n+1)/2 + n*k, where n is numVectors and k is numFixedStrats
+		// For numVectors=81 and numFixedStrats = 0, this is 3321
+		int maxTasknum = numVectors*(numVectors+1)/2+numVectors*numFixedStrats;
+		
+		if (tasknum < 1 || tasknum > maxTasknum) {
+			System.out.println("Error: Tasknum is out of range");
+			System.exit(-1);
+		}
+		
+		// Are we doing Q vs FHs?
+		if (tasknum <= numVectors*numFixedStrats) {
+			// Do this
+		} else { // QvsQs
+			tasknum = tasknum - numVectors*numFixedStrats;
+			int start = 0;
+			int Q1 = 0;
+			int Q2 = 0;
+			for (int i = 1; i <= numVectors; i++) {
+				start = (2*(numVectors+1)-i)*(i-1)/2; // (2(n+1)-i)*(i-1)/2
+				if (start < tasknum && tasknum <= (start+numVectors-i+1)) {
+					Q1 = i;
+					break;
+				}
+			}
+			Q2 = tasknum - start - 1 + Q1; // for reverse engineering: tasknum=Q2-Q1+start+1;
+			
+			System.out.println("beginning match for" + Q1 + " vs " + Q2);
+			OptVariables v1 = this.rfParamSet.get(Q1-1); // rfParamSet is 0-indexed
+			OptVariables v2 = this.rfParamSet.get(Q2-1);
+			res = this.getMatchResultString(v1, v2);
+			
+			pathName = outputDirectoryPath + Q1 + "v" + Q2 + ".txt";
+		}
+		
+		BufferedWriter out = null;
+		try {
+			out = new BufferedWriter(new FileWriter(pathName));
+			
+			
+			out.write(res);
+			out.write("\n");
+			
+			System.out.println("Finished.");
+			
+			
+			out.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		
+		
+	}
+	
+	protected void compileGridOutput(String outputDirectoryPath, String cacheName){
+		if(!outputDirectoryPath.endsWith("/")){
+			outputDirectoryPath = outputDirectoryPath + "/";
+		}
+		
+		String cachePath = outputDirectoryPath + cacheName;
+		BufferedWriter out = null;
+		BufferedReader in = null;
+		
+		try {
+			out = new BufferedWriter(new FileWriter(cachePath));
+			
+			System.out.println("beginning compilation...");
+			for(int i = 1; i <= numVectors; i++){
+				System.out.println("beginning compilations for " + i);
+				for(int j = i; j <= numVectors; j++){
+					// Read file & copy, line by line, to cache
+					String curPath = outputDirectoryPath+i+"v"+j+".txt";
+					
+					try {
+						in = new BufferedReader(new FileReader(curPath));
+						
+						String line = in.readLine();
+						while (line != null) {
+							out.write(line);
+							out.newLine();
+							line = in.readLine();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+						System.exit(-1);
+					}
+				}
+			}
+				
+			
+			
+			System.out.println("Finished.");
+			
+			out.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 		
 	}
 	

@@ -1,6 +1,8 @@
 package ethics.experiments.fssimple;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ import ethics.experiments.fssimple.auxiliary.FSSimpleBTSG;
 import ethics.experiments.fssimple.auxiliary.FSSubjectiveRF;
 import ethics.experiments.fssimple.auxiliary.PseudoGameCountWorld;
 import ethics.experiments.fssimple.auxiliary.RNPseudoTerm;
-import ethics.experiments.fssimple.specialagents.OpponentOutcomeAgent;
 import ethics.experiments.fssimple.specialagents.OpponentOutcomeDBLStealthAgent;
 import ethics.experiments.tbforagesteal.auxiliary.RFParamVarEnumerator;
 
@@ -50,6 +51,7 @@ public class FSSMatchCaching {
 	
 	protected int									nTries;
 	protected int									nGames;
+	protected int 									numVectors;
 	
 	protected SGDomain 								domain;
 	
@@ -63,54 +65,87 @@ public class FSSMatchCaching {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		long start = System.nanoTime();
 		
-		if(args.length != 2 && args.length != 3){
+		/*if(args.length != 2 && args.length != 3 && args.length != 4){
 			System.out.println("Wrong format. For full cache use:\n\tpathToCacheOutput learningRate\nFor row cache use:\n\t" +
-								"pathToOutputDirectory learningRate cacheMatrixRow");
+								"pathToOutputDirectory learningRate cacheMatrixRow\nFor grid cache use:\n\tpathToOutputDirectory learningRate 0 tasknum\n" +
+								"For grid compilation use:\n\tpathToOutputDirectory learningRate 0 0");
+			System.exit(-1);
+		}*/
+		
+		if(args.length != 4){
+			System.out.println("Wrong format. For row cache use:\n\tpathToOutputDirectory learningRate cacheMatrixRow probBackTurned" + 
+							   "\nFor grid compilation use:\n\tpathToOutputDirectory learningRate 0 probBackTurned");
 			System.exit(-1);
 		}
-		
 		
 		DPrint.toggleCode(284673923, false); //world printing debug code
 		DPrint.toggleCode(25633, false); //tournament printing debug code
 		
 		String outputFile = args[0];
 		double lr = Double.parseDouble(args[1]);
-		
-		FSSMatchCaching mc = new FSSMatchCaching(lr);
+		int row = Integer.parseInt(args[2])-1; // Why the -1? $SGE_TASK_ID is 1-indexed, but the Java arrays are 0-indexed
+		double probBackTurned = Double.parseDouble(args[3]);
+
+		FSSMatchCaching mc = new FSSMatchCaching(lr,probBackTurned);
 		
 		System.out.println("Beginning");
-		if(args.length == 2){
+		
+		if (row >= 0) mc.cacheRow(outputFile, row);
+		else mc.compileGridOutput(outputFile, "Cache.txt");
+		
+		/*if(args.length == 2){
 			mc.cacheAll(outputFile);
 		}
-		else{
+		else if(args.length == 3){
 			int row = Integer.parseInt(args[2]);
 			mc.cacheRow(outputFile, row);
 		}
-		
+		else if(args.length==4){
+			int tasknum = Integer.parseInt(args[3]);
+			if (tasknum != 0) mc.cacheGrid(outputFile, tasknum);
+			else mc.compileGridOutput(outputFile,"Cache.txt");
+		}*/
 
+
+		System.out.println("Elapsed time: " + (System.nanoTime()-start));
 	}
 	
 	
-	public FSSMatchCaching(double learningRate){
+	public FSSMatchCaching(double learningRate, double probBackTurned){
+		/* PARAMETERS TO SET BEFORE RUNNING */
+		
+		// Steal-punish values
+		/*double[] rewards = {1.0,-1.0,-0.5,-2.5,0};
+		double[] paramset = {-1.5,2,0.5};
+		int nParams = 2;*/
+		
+		// Share-reciprocate values
+		double[] rewards = {-.5,1.0,-.5,1.0,0.};
+		double[] paramset = {-1.5,1.5,0.5};
+		int nParams = 2;
+		
+		this.nTries =  25;
+		this.nGames = 1000;
+
+		/* PARAMETERS NOT TO TOUCH */
 		
 		this.baseLearningRate = learningRate;
 		
-		//this.rfParamSet = (new RFParamVarEnumerator(-1.5, 2.5, 0.5, 2)).allRFs;
+		this.rfParamSet = (new RFParamVarEnumerator(paramset[0],paramset[1],paramset[2],nParams)).allRFs;
 		//this.rfParamSet = (new RFParamVarEnumerator(0, 1., 1., 5)).allRFs;
-		this.rfParamSet = (new RFParamVarEnumerator(0, 1., 1., 7)).allRFs;
+		//this.rfParamSet = (new RFParamVarEnumerator(0, 1., 1., 7)).allRFs;
 		
-		
+		this.numVectors = this.rfParamSet.size();
 		
 		//this.objectiveReward = new FSSimpleJR();
-		this.objectiveReward = new FSSimpleJR(1., -0.5, -2.5, 0.);
-		//this.nTries =  25;
-		this.nTries = 1000;
-		this.nGames = 1000;
+		this.objectiveReward = new FSSimpleJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]);
+		//this.nTries = 1000;
 		//this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(objectiveReward);
-		this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(new FSSimplePOJR(1., -0.5, -2.5, 0.));
+		this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
 		
-		double probBackTurned = 0.2;
+		//double probBackTurned = 0.2;
 		
 		FSSimple dgen = new FSSimple(3);
 		this.domain = (SGDomain)dgen.generateDomain();
@@ -202,6 +237,117 @@ public class FSSMatchCaching {
 		
 	}
 	
+	protected void cacheGrid(String outputDirectoryPath,int tasknum){
+		
+		if(!outputDirectoryPath.endsWith("/")){
+			outputDirectoryPath = outputDirectoryPath + "/";
+		}
+		
+		String res = "";
+		String pathName = "";
+		
+		int numFixedStrats = 0; // Ignoring fixed strats right now
+		
+		// The max tasknum should be n(n+1)/2 + n*k, where n is numVectors and k is numFixedStrats
+		// For numVectors=81 and numFixedStrats = 0, this is 3321
+		int maxTasknum = numVectors*(numVectors+1)/2+numVectors*numFixedStrats;
+		
+		if (tasknum < 1 || tasknum > maxTasknum) {
+			System.out.println("Error: Tasknum is out of range");
+			System.exit(-1);
+		}
+		
+		// Are we doing Q vs FHs?
+		if (tasknum <= numVectors*numFixedStrats) {
+			// Do this
+		} else { // QvsQs
+			tasknum = tasknum - numVectors*numFixedStrats;
+			int start = 0;
+			int Q1 = 0;
+			int Q2 = 0;
+			for (int i = 1; i <= numVectors; i++) {
+				start = (2*(numVectors+1)-i)*(i-1)/2; // (2(n+1)-i)*(i-1)/2
+				if (start < tasknum && tasknum <= (start+numVectors-i+1)) {
+					Q1 = i;
+					break;
+				}
+			}
+			Q2 = tasknum - start - 1 + Q1; // for reverse engineering: tasknum=Q2-Q1+start+1;
+			
+			System.out.println("beginning match for" + Q1 + " vs " + Q2);
+			OptVariables v1 = this.rfParamSet.get(Q1-1); // rfParamSet is 0-indexed
+			OptVariables v2 = this.rfParamSet.get(Q2-1);
+			res = this.getMatchResultString(v1, v2);
+			
+			pathName = outputDirectoryPath + Q1 + "v" + Q2 + ".txt";
+		}
+		
+		BufferedWriter out = null;
+		try {
+			out = new BufferedWriter(new FileWriter(pathName));
+			
+			
+			out.write(res);
+			out.write("\n");
+			
+			System.out.println("Finished.");
+			
+			
+			out.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		
+		
+	}
+	
+	protected void compileGridOutput(String outputDirectoryPath, String cacheName){
+		if(!outputDirectoryPath.endsWith("/")){
+			outputDirectoryPath = outputDirectoryPath + "/";
+		}
+		
+		String cachePath = outputDirectoryPath + cacheName;
+		BufferedWriter out = null;
+		BufferedReader in = null;
+		
+		try {
+			out = new BufferedWriter(new FileWriter(cachePath));
+			
+			System.out.println("beginning compilation...");
+			for(int i = 0; i < numVectors; i++){
+				System.out.println("beginning compilations for row " + i);
+				// Read file & copy, line by line, to cache
+				String curPath = outputDirectoryPath+i+".txt";
+					
+				try {
+					in = new BufferedReader(new FileReader(curPath));
+
+					String line = in.readLine();
+					while (line != null) {
+						out.write(line);
+						out.newLine();
+						line = in.readLine();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.exit(-1);
+				}
+			}
+				
+			
+			
+			System.out.println("Finished.");
+			
+			out.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		
+	}
 	
 	protected String getMatchResultString(OptVariables v1, OptVariables v2){
 		
@@ -260,8 +406,8 @@ public class FSSMatchCaching {
 	
 	protected DoublePair runMatch(OptVariables v1, OptVariables v2){
 		
-		//return this.runMatchLearning(v1, v2);
-		return this.runMatchHardCoded(v1, v2);
+		return this.runMatchLearning(v1, v2);
+		//return this.runMatchHardCoded(v1, v2);
 		
 	}
 	

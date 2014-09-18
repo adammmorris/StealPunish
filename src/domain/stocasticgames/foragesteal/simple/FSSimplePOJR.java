@@ -11,8 +11,12 @@ import burlap.oomdp.stochasticgames.JointAction;
 public class FSSimplePOJR extends FSSimpleJR {
 
 	
-	public FSSimplePOJR(double stealValue, double puncherReward, double puncheeReward, double...forageRewards){
+	/*public FSSimplePOJR(double stealValue, double puncherReward, double puncheeReward, double...forageRewards){
 		super(stealValue, puncherReward, puncheeReward, forageRewards);
+	}*/
+	
+	public FSSimplePOJR(double stealerValue, double stealeeValue,double puncherReward, double puncheeReward, double...forageRewards){
+		super(stealerValue, stealeeValue, puncherReward, puncheeReward, forageRewards);
 	}
 	
 	

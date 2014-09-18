@@ -34,7 +34,7 @@ public class IRExperiment implements Experiment {
 	/**
 	 * SET THIS TO false BEFORE RUNNING FOR REAL
 	 */
-	private boolean practice = false; // set this to true if we're doing practice stuff, otherwise set to false
+	private boolean practice = true; // set this to true if we're doing practice stuff, otherwise set to false
 	
 	private static String dirSep = "/"; // set this to \ if on windows..
 	

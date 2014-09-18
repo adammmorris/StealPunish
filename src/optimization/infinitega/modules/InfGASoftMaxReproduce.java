@@ -17,10 +17,15 @@ public class InfGASoftMaxReproduce implements RatioReproduce {
 	protected boolean			normalize = false;
 	protected double			temperature = 1.;
 	protected boolean			usePopulationRatio = true;
-	
+	protected double			mutation = 0.;
 	
 	public InfGASoftMaxReproduce(double temp){
 		this.temperature = temp;
+	}
+	
+	public InfGASoftMaxReproduce(double temp,double mutation){
+		this.temperature = temp;
+		this.mutation = mutation;
 	}
 	
 	public InfGASoftMaxReproduce(double temp, boolean normalize){
@@ -28,7 +33,13 @@ public class InfGASoftMaxReproduce implements RatioReproduce {
 		this.normalize = normalize;
 	}
 	
-	@Override
+	public InfGASoftMaxReproduce(double temp, boolean normalize, double mutation){
+		this.temperature = temp;
+		this.normalize = normalize;
+		this.mutation = mutation;
+	}
+	
+	/*@Override
 	public RepResult ratioReproduce(List<GenomeRatioFitness> popDist) {
 		
 		double [] fitArray = this.getFitnessArray(popDist);
@@ -63,6 +74,63 @@ public class InfGASoftMaxReproduce implements RatioReproduce {
 			throw new RuntimeException("New population doesn't sum to 1...");
 		}
 		
+		return res;
+	}*/
+	
+	@Override
+	public RepResult ratioReproduce(List<GenomeRatioFitness> popDist) {
+		double [] fitArray = this.getFitnessArray(popDist);
+		BoltzmannDistribution bd = new BoltzmannDistribution(fitArray, this.temperature);
+		double [] fitProb = bd.getProbabilities();
+
+		RepResult res = new RepResult(0., new ArrayList<GenomeRatioFitness>(popDist));
+		double sumPopIncrease = 0.;
+
+		double [] gainedFromMutation = new double[fitProb.length];
+		for(int i = 0; i < fitProb.length; i++){
+
+			double chanceReproduce = fitProb[i]*popDist.get(i).gr.ratio;
+			double toOthers = chanceReproduce * mutation / (double)(fitProb.length - 1);
+
+			for(int j = 0; j < gainedFromMutation.length; j++){
+				if(j == i){
+					continue;
+				}
+				else{
+					gainedFromMutation[j] += toOthers;
+				}
+			}
+
+		}
+
+
+
+		for(int i = 0; i < fitProb.length; i++){
+			//double children = fitProb[i] * popDist.get(i).gr.ratio;
+			double children = fitProb[i];
+			if(this.usePopulationRatio){
+				children *= popDist.get(i).gr.ratio*(1.-mutation);
+			}
+			sumPopIncrease += children + gainedFromMutation[i];
+			GenomeRatio gr = res.nextPop.get(i).gr;
+			gr.ratio += children + gainedFromMutation[i];
+
+			DPrint.cf(debugCode, "%.3f %.2f\n", fitProb[i], res.nextPop.get(i).fitness);
+		}
+
+		res.repChange = sumPopIncrease;
+
+		//renormalize
+		double newSum = 0.;
+		for(int i = 0; i < popDist.size(); i++){
+			res.nextPop.get(i).gr.ratio /= (1. + sumPopIncrease);
+			newSum += res.nextPop.get(i).gr.ratio;
+		}
+
+		if(Math.abs(1. - newSum) > 0.000001){
+			throw new RuntimeException("New population doesn't sum to 1...");
+		}
+
 		return res;
 	}
 	
