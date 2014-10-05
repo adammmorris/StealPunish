@@ -31,6 +31,7 @@ import ethics.ParameterizedRFFactory;
 import ethics.experiments.fssimple.auxiliary.ConsantPsudoTermWorldGenerator;
 import ethics.experiments.fssimple.auxiliary.FSSimpleBTSG;
 import ethics.experiments.fssimple.auxiliary.FSSubjectiveRF;
+import ethics.experiments.fssimple.auxiliary.FSSubjectiveRFSplit;
 import ethics.experiments.fssimple.auxiliary.PseudoGameCountWorld;
 import ethics.experiments.fssimple.auxiliary.RNPseudoTerm;
 import ethics.experiments.fssimple.specialagents.OpponentOutcomeDBLStealthAgent;
@@ -59,8 +60,7 @@ public class FSSMatchCaching {
 	
 	
 	protected boolean								replaceResultsWithAvgOnly = true;
-	
-	
+		
 	/**
 	 * @param args
 	 */
@@ -74,9 +74,9 @@ public class FSSMatchCaching {
 			System.exit(-1);
 		}*/
 		
-		if(args.length != 4){
-			System.out.println("Wrong format. For row cache use:\n\tpathToOutputDirectory learningRate cacheMatrixRow probBackTurned" + 
-							   "\nFor grid compilation use:\n\tpathToOutputDirectory learningRate 0 probBackTurned");
+		if(args.length != 5){
+			System.out.println("Wrong format. For row cache use:\n\tpathToOutputDirectory cacheMatrixRow learningRate probBackTurned numTries" + 
+							   "\nFor grid compilation use:\n\tpathToOutputDirectory 0 learningRate probBackTurned numTries");
 			System.exit(-1);
 		}
 		
@@ -84,11 +84,11 @@ public class FSSMatchCaching {
 		DPrint.toggleCode(25633, false); //tournament printing debug code
 		
 		String outputFile = args[0];
-		double lr = Double.parseDouble(args[1]);
-		int row = Integer.parseInt(args[2])-1; // Why the -1? $SGE_TASK_ID is 1-indexed, but the Java arrays are 0-indexed
+		int row = Integer.parseInt(args[1])-1; // Why the -1? $SGE_TASK_ID is 1-indexed, but the Java arrays are 0-indexed
+		double lr = Double.parseDouble(args[2]);
 		double probBackTurned = Double.parseDouble(args[3]);
-
-		FSSMatchCaching mc = new FSSMatchCaching(lr,probBackTurned);
+		int numTries = Integer.parseInt(args[4]);
+		FSSMatchCaching mc = new FSSMatchCaching(lr,probBackTurned,numTries);
 		
 		System.out.println("Beginning");
 		
@@ -113,20 +113,20 @@ public class FSSMatchCaching {
 	}
 	
 	
-	public FSSMatchCaching(double learningRate, double probBackTurned){
+	public FSSMatchCaching(double learningRate, double probBackTurned, int numTries){
 		/* PARAMETERS TO SET BEFORE RUNNING */
 		
 		// Steal-punish values
 		/*double[] rewards = {1.0,-1.0,-0.5,-2.5,0};
-		double[] paramset = {-1.5,2,0.5};
-		int nParams = 2;*/
+		double[] paramset = {-10,10,10};
+		int nParams = 3;*/
 		
 		// Share-reciprocate values
 		double[] rewards = {-.5,1.0,-.5,1.0,0.};
-		double[] paramset = {-1.5,1.5,0.5};
-		int nParams = 2;
+		double[] paramset = {-10,10,10};
+		int nParams = 3;
 		
-		this.nTries =  25;
+		this.nTries =  numTries;
 		this.nGames = 1000;
 
 		/* PARAMETERS NOT TO TOUCH */
@@ -142,8 +142,8 @@ public class FSSMatchCaching {
 		//this.objectiveReward = new FSSimpleJR();
 		this.objectiveReward = new FSSimpleJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]);
 		//this.nTries = 1000;
-		//this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(objectiveReward);
-		this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
+		//this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
+		this.rewardFactory = new FSSubjectiveRFSplit.FSSubjectiveRFSplitFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
 		
 		//double probBackTurned = 0.2;
 		

@@ -1,0 +1,2523 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 877133824 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2718), pid=30794, tid=47532821186304
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_05-b13) (build 1.8.0_05-b13)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000000e31800):  VMThread [stack: 0x00002b3b18dc0000,0x00002b3b18ec1000] [id=31190]
+
+Stack: [0x00002b3b18dc0000,0x00002b3b18ec1000],  sp=0x00002b3b18ebf1f0,  free space=1020k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xa2f43a]  VMError::report_and_die()+0x2ca
+V  [libjvm.so+0x4b2d5b]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x8b
+V  [libjvm.so+0x89e443]  os::Linux::commit_memory_impl(char*, unsigned long, bool)+0x103
+V  [libjvm.so+0x89e999]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0x29
+V  [libjvm.so+0x89863a]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x2a
+V  [libjvm.so+0x909243]  PSVirtualSpace::expand_by(unsigned long)+0x53
+V  [libjvm.so+0x90a648]  PSYoungGen::resize_generation(unsigned long, unsigned long)+0xf8
+V  [libjvm.so+0x9097a2]  PSYoungGen::resize(unsigned long, unsigned long)+0x22
+V  [libjvm.so+0x906aff]  PSScavenge::invoke_no_policy()+0xf0f
+V  [libjvm.so+0x907271]  PSScavenge::invoke()+0x41
+V  [libjvm.so+0x8bfed0]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x70
+V  [libjvm.so+0xa30af7]  VM_ParallelGCFailedAllocation::doit()+0x97
+V  [libjvm.so+0xa38215]  VM_Operation::evaluate()+0x55
+V  [libjvm.so+0xa3660a]  VMThread::evaluate_operation(VM_Operation*)+0xba
+V  [libjvm.so+0xa3698e]  VMThread::loop()+0x1ce
+V  [libjvm.so+0xa36e00]  VMThread::run()+0x70
+V  [libjvm.so+0x8a00c8]  java_start(Thread*)+0x108
+
+VM_Operation (0x00002b3b200fee90): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0x00002b3acc351000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00002b3acc373000 JavaThread "pool-1-thread-64" [_thread_blocked, id=32426, stack(0x00002b3b21313000,0x00002b3b21414000)]
+  0x00002b3acc371800 JavaThread "pool-1-thread-63" [_thread_blocked, id=32425, stack(0x00002b3b21212000,0x00002b3b21313000)]
+  0x00002b3acc36f800 JavaThread "pool-1-thread-62" [_thread_blocked, id=32286, stack(0x00002b3b21111000,0x00002b3b21212000)]
+  0x00002b3acc36e000 JavaThread "pool-1-thread-61" [_thread_blocked, id=32275, stack(0x00002b3b21010000,0x00002b3b21111000)]
+  0x00002b3acc36c000 JavaThread "pool-1-thread-60" [_thread_blocked, id=32273, stack(0x00002b3b20f0f000,0x00002b3b21010000)]
+  0x00002b3acc36a000 JavaThread "pool-1-thread-59" [_thread_blocked, id=32272, stack(0x00002b3b20e0e000,0x00002b3b20f0f000)]
+  0x00002b3acc368000 JavaThread "pool-1-thread-58" [_thread_blocked, id=32266, stack(0x00002b3b20d0d000,0x00002b3b20e0e000)]
+  0x00002b3acc366000 JavaThread "pool-1-thread-57" [_thread_blocked, id=32264, stack(0x00002b3b20c0c000,0x00002b3b20d0d000)]
+  0x00002b3acc364000 JavaThread "pool-1-thread-56" [_thread_blocked, id=32257, stack(0x00002b3b20b0b000,0x00002b3b20c0c000)]
+  0x00002b3acc362000 JavaThread "pool-1-thread-55" [_thread_blocked, id=32255, stack(0x00002b3b20a0a000,0x00002b3b20b0b000)]
+  0x00002b3acc360800 JavaThread "pool-1-thread-54" [_thread_blocked, id=32251, stack(0x00002b3b20909000,0x00002b3b20a0a000)]
+  0x00002b3acc35e800 JavaThread "pool-1-thread-53" [_thread_blocked, id=32248, stack(0x00002b3b20808000,0x00002b3b20909000)]
+  0x00002b3acc35c800 JavaThread "pool-1-thread-52" [_thread_blocked, id=32235, stack(0x00002b3b20707000,0x00002b3b20808000)]
+  0x00002b3acc35b000 JavaThread "pool-1-thread-51" [_thread_blocked, id=32229, stack(0x00002b3b20606000,0x00002b3b20707000)]
+  0x00002b3acc359800 JavaThread "pool-1-thread-50" [_thread_blocked, id=32218, stack(0x00002b3b20505000,0x00002b3b20606000)]
+  0x00002b3acc357800 JavaThread "pool-1-thread-49" [_thread_blocked, id=32215, stack(0x00002b3b20404000,0x00002b3b20505000)]
+  0x00002b3acc356000 JavaThread "pool-1-thread-48" [_thread_blocked, id=32210, stack(0x00002b3b20303000,0x00002b3b20404000)]
+  0x00002b3acc354000 JavaThread "pool-1-thread-47" [_thread_blocked, id=32206, stack(0x00002b3b20202000,0x00002b3b20303000)]
+  0x00002b3acc352800 JavaThread "pool-1-thread-46" [_thread_blocked, id=32202, stack(0x00002b3b20101000,0x00002b3b20202000)]
+  0x00002b3acc351000 JavaThread "pool-1-thread-45" [_thread_blocked, id=32199, stack(0x00002b3b20000000,0x00002b3b20101000)]
+  0x00002b3acc34f000 JavaThread "pool-1-thread-44" [_thread_blocked, id=32195, stack(0x00002b3b1be10000,0x00002b3b1bf11000)]
+  0x00002b3acc34d800 JavaThread "pool-1-thread-43" [_thread_blocked, id=32183, stack(0x00002b3b1bd0f000,0x00002b3b1be10000)]
+  0x00002b3acc34b800 JavaThread "pool-1-thread-42" [_thread_blocked, id=32158, stack(0x00002b3b1bc0e000,0x00002b3b1bd0f000)]
+  0x00002b3acc34a000 JavaThread "pool-1-thread-41" [_thread_blocked, id=32119, stack(0x00002b3b1bb0d000,0x00002b3b1bc0e000)]
+  0x00002b3acc348000 JavaThread "pool-1-thread-40" [_thread_blocked, id=32115, stack(0x00002b3b1ba0c000,0x00002b3b1bb0d000)]
+  0x00002b3acc346000 JavaThread "pool-1-thread-39" [_thread_blocked, id=32082, stack(0x00002b3b1b90b000,0x00002b3b1ba0c000)]
+  0x00002b3acc344800 JavaThread "pool-1-thread-38" [_thread_blocked, id=32061, stack(0x00002b3b1b80a000,0x00002b3b1b90b000)]
+  0x00002b3acc342800 JavaThread "pool-1-thread-37" [_thread_blocked, id=32050, stack(0x00002b3b1b709000,0x00002b3b1b80a000)]
+  0x00002b3acc341000 JavaThread "pool-1-thread-36" [_thread_blocked, id=32045, stack(0x00002b3b1b608000,0x00002b3b1b709000)]
+  0x00002b3acc33f000 JavaThread "pool-1-thread-35" [_thread_blocked, id=32040, stack(0x00002b3b1b507000,0x00002b3b1b608000)]
+  0x00002b3acc33d800 JavaThread "pool-1-thread-34" [_thread_blocked, id=32037, stack(0x00002b3b1b406000,0x00002b3b1b507000)]
+  0x00002b3acc33c000 JavaThread "pool-1-thread-33" [_thread_blocked, id=32033, stack(0x00002b3b1b305000,0x00002b3b1b406000)]
+  0x00002b3acc33a000 JavaThread "pool-1-thread-32" [_thread_blocked, id=32007, stack(0x00002b3b1b204000,0x00002b3b1b305000)]
+  0x00002b3acc338000 JavaThread "pool-1-thread-31" [_thread_blocked, id=32003, stack(0x00002b3b1b103000,0x00002b3b1b204000)]
+  0x00002b3acc336000 JavaThread "pool-1-thread-30" [_thread_blocked, id=31962, stack(0x00002b3b1affa000,0x00002b3b1b0fb000)]
+  0x00002b3acc334000 JavaThread "pool-1-thread-29" [_thread_blocked, id=31961, stack(0x00002b3b1aef9000,0x00002b3b1affa000)]
+  0x00002b3acc332800 JavaThread "pool-1-thread-28" [_thread_blocked, id=31955, stack(0x00002b3b1adf8000,0x00002b3b1aef9000)]
+  0x00002b3acc330800 JavaThread "pool-1-thread-27" [_thread_blocked, id=31952, stack(0x00002b3b1acf7000,0x00002b3b1adf8000)]
+  0x00002b3acc32e800 JavaThread "pool-1-thread-26" [_thread_blocked, id=31949, stack(0x00002b3b1abf6000,0x00002b3b1acf7000)]
+  0x00002b3acc32c800 JavaThread "pool-1-thread-25" [_thread_blocked, id=31945, stack(0x00002b3b1aaf5000,0x00002b3b1abf6000)]
+  0x00002b3acc32a800 JavaThread "pool-1-thread-24" [_thread_blocked, id=31943, stack(0x00002b3b1a9f4000,0x00002b3b1aaf5000)]
+  0x00002b3acc329000 JavaThread "pool-1-thread-23" [_thread_blocked, id=31941, stack(0x00002b3b1a8eb000,0x00002b3b1a9ec000)]
+  0x00002b3acc327000 JavaThread "pool-1-thread-22" [_thread_blocked, id=31940, stack(0x00002b3b1a7ea000,0x00002b3b1a8eb000)]
+  0x00002b3acc325000 JavaThread "pool-1-thread-21" [_thread_blocked, id=31938, stack(0x00002b3b1a6e9000,0x00002b3b1a7ea000)]
+  0x00002b3acc323000 JavaThread "pool-1-thread-20" [_thread_blocked, id=31936, stack(0x00002b3b1a5e8000,0x00002b3b1a6e9000)]
+  0x00002b3acc321000 JavaThread "pool-1-thread-19" [_thread_blocked, id=31933, stack(0x00002b3b1a4df000,0x00002b3b1a5e0000)]
+  0x00002b3acc31f000 JavaThread "pool-1-thread-18" [_thread_blocked, id=31929, stack(0x00002b3b1a3de000,0x00002b3b1a4df000)]
+  0x00002b3acc31d000 JavaThread "pool-1-thread-17" [_thread_blocked, id=31926, stack(0x00002b3b1a2dd000,0x00002b3b1a3de000)]
+  0x00002b3acc31b000 JavaThread "pool-1-thread-16" [_thread_blocked, id=31924, stack(0x00002b3b1a1d4000,0x00002b3b1a2d5000)]
+  0x00002b3acc319800 JavaThread "pool-1-thread-15" [_thread_blocked, id=31920, stack(0x00002b3acbe86000,0x00002b3acbf87000)]
+  0x00002b3acc317800 JavaThread "pool-1-thread-14" [_thread_blocked, id=31919, stack(0x00002b3acbd85000,0x00002b3acbe86000)]
+  0x00002b3acc316000 JavaThread "pool-1-thread-13" [_thread_blocked, id=31914, stack(0x00002b3acbc84000,0x00002b3acbd85000)]
+  0x00002b3acc314800 JavaThread "pool-1-thread-12" [_thread_blocked, id=31873, stack(0x00002b3acbb83000,0x00002b3acbc84000)]
+  0x00002b3acc312800 JavaThread "pool-1-thread-11" [_thread_blocked, id=31871, stack(0x00002b3acba82000,0x00002b3acbb83000)]
+  0x00002b3acc311000 JavaThread "pool-1-thread-10" [_thread_blocked, id=31866, stack(0x00002b3acb981000,0x00002b3acba82000)]
+  0x00002b3acc30f000 JavaThread "pool-1-thread-9" [_thread_blocked, id=31864, stack(0x00002b3acb880000,0x00002b3acb981000)]
+  0x00002b3acc30d800 JavaThread "pool-1-thread-8" [_thread_blocked, id=31856, stack(0x00002b3acb77f000,0x00002b3acb880000)]
+  0x00002b3acc30c000 JavaThread "pool-1-thread-7" [_thread_blocked, id=31851, stack(0x00002b3acb67e000,0x00002b3acb77f000)]
+  0x00002b3acc30a000 JavaThread "pool-1-thread-6" [_thread_blocked, id=31848, stack(0x00002b3acb57d000,0x00002b3acb67e000)]
+  0x00002b3acc308800 JavaThread "pool-1-thread-5" [_thread_blocked, id=31836, stack(0x00002b3acb47c000,0x00002b3acb57d000)]
+  0x00002b3acc307000 JavaThread "pool-1-thread-4" [_thread_blocked, id=31830, stack(0x00002b3acb37b000,0x00002b3acb47c000)]
+  0x00002b3acc305000 JavaThread "pool-1-thread-3" [_thread_blocked, id=31813, stack(0x00002b3acb27a000,0x00002b3acb37b000)]
+  0x00002b3acc303800 JavaThread "pool-1-thread-2" [_thread_blocked, id=31810, stack(0x00002b3acb179000,0x00002b3acb27a000)]
+  0x00002b3acc302000 JavaThread "pool-1-thread-1" [_thread_blocked, id=31807, stack(0x00002b3acb078000,0x00002b3acb179000)]
+  0x00002b3acc06a000 JavaThread "Service Thread" daemon [_thread_blocked, id=31732, stack(0x00002b3aca9d0000,0x00002b3acaad1000)]
+  0x00002b3acc065000 JavaThread "C1 CompilerThread17" daemon [_thread_blocked, id=31697, stack(0x00002b3aca8cf000,0x00002b3aca9d0000)]
+  0x00002b3acc063000 JavaThread "C1 CompilerThread16" daemon [_thread_blocked, id=31670, stack(0x00002b3b1a0d3000,0x00002b3b1a1d4000)]
+  0x00002b3acc061000 JavaThread "C1 CompilerThread15" daemon [_thread_blocked, id=31659, stack(0x00002b3b19fd2000,0x00002b3b1a0d3000)]
+  0x00002b3acc05e800 JavaThread "C1 CompilerThread14" daemon [_thread_blocked, id=31628, stack(0x00002b3b19ed1000,0x00002b3b19fd2000)]
+  0x00002b3acc05c800 JavaThread "C1 CompilerThread13" daemon [_thread_blocked, id=31605, stack(0x00002b3b19dd0000,0x00002b3b19ed1000)]
+  0x00002b3acc05a800 JavaThread "C1 CompilerThread12" daemon [_thread_blocked, id=31585, stack(0x00002b3b19ccf000,0x00002b3b19dd0000)]
+  0x00002b3acc058800 JavaThread "C2 CompilerThread11" daemon [_thread_blocked, id=31569, stack(0x00002b3b19bce000,0x00002b3b19ccf000)]
+  0x00002b3acc056800 JavaThread "C2 CompilerThread10" daemon [_thread_blocked, id=31544, stack(0x00002b3b19acd000,0x00002b3b19bce000)]
+  0x00002b3acc054800 JavaThread "C2 CompilerThread9" daemon [_thread_blocked, id=31508, stack(0x00002b3b199cc000,0x00002b3b19acd000)]
+  0x00002b3acc052800 JavaThread "C2 CompilerThread8" daemon [_thread_blocked, id=31488, stack(0x00002b3b198cb000,0x00002b3b199cc000)]
+  0x00002b3acc050000 JavaThread "C2 CompilerThread7" daemon [_thread_blocked, id=31464, stack(0x00002b3b197ca000,0x00002b3b198cb000)]
+  0x00002b3acc04e000 JavaThread "C2 CompilerThread6" daemon [_thread_blocked, id=31434, stack(0x00002b3b196c9000,0x00002b3b197ca000)]
+  0x00002b3acc04c000 JavaThread "C2 CompilerThread5" daemon [_thread_blocked, id=31412, stack(0x00002b3b195c8000,0x00002b3b196c9000)]
+  0x00002b3acc041800 JavaThread "C2 CompilerThread4" daemon [_thread_blocked, id=31386, stack(0x00002b3b194c7000,0x00002b3b195c8000)]
+  0x00002b3acc03f800 JavaThread "C2 CompilerThread3" daemon [_thread_blocked, id=31340, stack(0x00002b3b214c7000,0x00002b3b215c8000)]
+  0x00002b3acc033000 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=31300, stack(0x00002b3b193c6000,0x00002b3b194c7000)]
+  0x00002b3acc030800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=31278, stack(0x00002b3b192c5000,0x00002b3b193c6000)]
+  0x00002b3acc02e000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=31272, stack(0x00002b3b191c4000,0x00002b3b192c5000)]
+  0x00002b3acc02c000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=31268, stack(0x00002b3b190c3000,0x00002b3b191c4000)]
+  0x0000000000e40800 JavaThread "Finalizer" daemon [_thread_blocked, id=31233, stack(0x00002b3b18fc2000,0x00002b3b190c3000)]
+  0x0000000000e36800 JavaThread "Reference Handler" daemon [_thread_blocked, id=31217, stack(0x00002b3b18ec1000,0x00002b3b18fc2000)]
+  0x00000000007d2000 JavaThread "main" [_thread_blocked, id=30825, stack(0x00002b3ab1bba000,0x00002b3ab1cbb000)]
+
+Other Threads:
+=>0x0000000000e31800 VMThread [stack: 0x00002b3b18dc0000,0x00002b3b18ec1000] [id=31190]
+  0x00002b3acc06d000 WatcherThread [stack: 0x00002b3acaad1000,0x00002b3acabd2000] [id=31747]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00000000007d08e0] Threads_lock - owner thread: 0x0000000000e31800
+[0x00000000007d0de0] Heap_lock - owner thread: 0x00002b3acc351000
+
+Heap:
+ PSYoungGen      total 4212224K, used 104192K [0x0000000580100000, 0x000000068af00000, 0x0000000800000000)
+  eden space 4059648K, 0% used [0x0000000580100000,0x0000000580100000,0x0000000677d80000)
+  from space 152576K, 68% used [0x0000000677d80000,0x000000067e340000,0x0000000681280000)
+  to   space 144896K, 0% used [0x0000000681280000,0x0000000681280000,0x000000068a000000)
+ ParOldGen       total 2066944K, used 1157673K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 56% used [0x0000000080200000,0x00000000c6c8a488,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+
+Card table byte_map: [0x00002b3ac19a4000,0x00002b3ac55a4000] byte_map_base: 0x00002b3ac15a3000
+
+Marking Bits: (ParMarkBitMap*) 0x00002b3ab18d8cc0
+ Begin Bits: [0x00002b3ad0000000, 0x00002b3aedff8000)
+ End Bits:   [0x00002b3aedff8000, 0x00002b3b0bff0000)
+
+Polling page: 0x00002b3ab2334000
+
+CodeCache: size=245760Kb used=6680Kb max_used=6722Kb free=239079Kb
+ bounds [0x00002b3ab25e4000, 0x00002b3ab2c84000, 0x00002b3ac15e4000]
+ total_blobs=1119 nmethods=831 adapters=199
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 101.921 Thread 0x00002b3acc05c800  846       3       burlap.oomdp.stochasticgames.World::init (95 bytes)
+Event: 101.923 Thread 0x00002b3acc05c800 nmethod 846 0x00002b3ab2c1b3d0 code [0x00002b3ab2c1b5e0, 0x00002b3ab2c1c190]
+Event: 101.924 Thread 0x00002b3acc05c800  847       3       burlap.oomdp.stochasticgames.common.ConstantSGStateGenerator::generateState (153 bytes)
+Event: 101.927 Thread 0x00002b3acc05c800 nmethod 847 0x00002b3ab2c16050 code [0x00002b3ab2c16400, 0x00002b3ab2c18378]
+Event: 102.571 Thread 0x00002b3acc05c800  848       3       burlap.oomdp.stochasticgames.World::getRegisteredAgents (12 bytes)
+Event: 102.572 Thread 0x00002b3acc05c800 nmethod 848 0x00002b3ab2c19d50 code [0x00002b3ab2c19ec0, 0x00002b3ab2c1a0a8]
+Event: 110.501 Thread 0x00002b3acc04e000 nmethod 753 0x00002b3ab2c4ec10 code [0x00002b3ab2c4f7a0, 0x00002b3ab2c58e58]
+Event: 116.812 Thread 0x00002b3acc050000  849       4       java.lang.Integer::toString (48 bytes)
+Event: 117.056 Thread 0x00002b3acc050000 nmethod 849 0x00002b3ab2c122d0 code [0x00002b3ab2c12460, 0x00002b3ab2c12a68]
+Event: 299.860 Thread 0x00002b3acc033000 nmethod 761 0x00002b3ab2c66b90 code [0x00002b3ab2c67460, 0x00002b3ab2c6ec88]
+
+GC Heap History (10 events):
+Event: 87.476 GC heap after
+Heap after GC invocations=48 (full 0):
+ PSYoungGen      total 2893312K, used 83904K [0x0000000580100000, 0x0000000638c80000, 0x0000000800000000)
+  eden space 2783232K, 0% used [0x0000000580100000,0x0000000580100000,0x0000000629f00000)
+  from space 110080K, 76% used [0x0000000631200000,0x00000006363f0000,0x0000000637d80000)
+  to   space 117760K, 0% used [0x0000000629f00000,0x0000000629f00000,0x0000000631200000)
+ ParOldGen       total 2066944K, used 792344K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 38% used [0x0000000080200000,0x00000000b07c6378,0x00000000fe480000)
+ Metaspace       used 4636K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+}
+Event: 93.472 GC heap before
+{Heap before GC invocations=49 (full 0):
+ PSYoungGen      total 2893312K, used 2867136K [0x0000000580100000, 0x0000000638c80000, 0x0000000800000000)
+  eden space 2783232K, 100% used [0x0000000580100000,0x0000000629f00000,0x0000000629f00000)
+  from space 110080K, 76% used [0x0000000631200000,0x00000006363f0000,0x0000000637d80000)
+  to   space 117760K, 0% used [0x0000000629f00000,0x0000000629f00000,0x0000000631200000)
+ ParOldGen       total 2066944K, used 792344K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 38% used [0x0000000080200000,0x00000000b07c6378,0x00000000fe480000)
+ Metaspace       used 4636K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+Event: 95.305 GC heap after
+Heap after GC invocations=49 (full 0):
+ PSYoungGen      total 2900992K, used 104128K [0x0000000580100000, 0x000000065da00000, 0x0000000800000000)
+  eden space 2783232K, 0% used [0x0000000580100000,0x0000000580100000,0x0000000629f00000)
+  from space 117760K, 88% used [0x0000000629f00000,0x00000006304b0000,0x0000000631200000)
+  to   space 131072K, 0% used [0x0000000655a00000,0x0000000655a00000,0x000000065da00000)
+ ParOldGen       total 2066944K, used 869994K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 42% used [0x0000000080200000,0x00000000b539ab28,0x00000000fe480000)
+ Metaspace       used 4636K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+}
+Event: 99.934 GC heap before
+{Heap before GC invocations=50 (full 0):
+ PSYoungGen      total 2900992K, used 2887360K [0x0000000580100000, 0x000000065da00000, 0x0000000800000000)
+  eden space 2783232K, 100% used [0x0000000580100000,0x0000000629f00000,0x0000000629f00000)
+  from space 117760K, 88% used [0x0000000629f00000,0x00000006304b0000,0x0000000631200000)
+  to   space 131072K, 0% used [0x0000000655a00000,0x0000000655a00000,0x000000065da00000)
+ ParOldGen       total 2066944K, used 869994K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 42% used [0x0000000080200000,0x00000000b539ab28,0x00000000fe480000)
+ Metaspace       used 4636K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+Event: 101.408 GC heap after
+Heap after GC invocations=50 (full 0):
+ PSYoungGen      total 3492352K, used 92704K [0x0000000580100000, 0x000000065e700000, 0x0000000800000000)
+  eden space 3361280K, 0% used [0x0000000580100000,0x0000000580100000,0x000000064d380000)
+  from space 131072K, 70% used [0x0000000655a00000,0x000000065b488000,0x000000065da00000)
+  to   space 137728K, 0% used [0x000000064d380000,0x000000064d380000,0x0000000655a00000)
+ ParOldGen       total 2066944K, used 952923K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 46% used [0x0000000080200000,0x00000000ba496e38,0x00000000fe480000)
+ Metaspace       used 4636K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+}
+Event: 107.159 GC heap before
+{Heap before GC invocations=51 (full 0):
+ PSYoungGen      total 3492352K, used 3453984K [0x0000000580100000, 0x000000065e700000, 0x0000000800000000)
+  eden space 3361280K, 100% used [0x0000000580100000,0x000000064d380000,0x000000064d380000)
+  from space 131072K, 70% used [0x0000000655a00000,0x000000065b488000,0x000000065da00000)
+  to   space 137728K, 0% used [0x000000064d380000,0x000000064d380000,0x0000000655a00000)
+ ParOldGen       total 2066944K, used 952923K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 46% used [0x0000000080200000,0x00000000ba496e38,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+Event: 108.472 GC heap after
+Heap after GC invocations=51 (full 0):
+ PSYoungGen      total 3499008K, used 99072K [0x0000000580100000, 0x000000068a000000, 0x0000000800000000)
+  eden space 3361280K, 0% used [0x0000000580100000,0x0000000580100000,0x000000064d380000)
+  from space 137728K, 71% used [0x000000064d380000,0x0000000653440000,0x0000000655a00000)
+  to   space 144896K, 0% used [0x0000000681280000,0x0000000681280000,0x000000068a000000)
+ ParOldGen       total 2066944K, used 1019733K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 49% used [0x0000000080200000,0x00000000be5d5588,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+}
+Event: 113.596 GC heap before
+{Heap before GC invocations=52 (full 0):
+ PSYoungGen      total 3499008K, used 3460352K [0x0000000580100000, 0x000000068a000000, 0x0000000800000000)
+  eden space 3361280K, 100% used [0x0000000580100000,0x000000064d380000,0x000000064d380000)
+  from space 137728K, 71% used [0x000000064d380000,0x0000000653440000,0x0000000655a00000)
+  to   space 144896K, 0% used [0x0000000681280000,0x0000000681280000,0x000000068a000000)
+ ParOldGen       total 2066944K, used 1019733K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 49% used [0x0000000080200000,0x00000000be5d5588,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+Event: 115.611 GC heap after
+Heap after GC invocations=52 (full 0):
+ PSYoungGen      total 4204544K, used 106720K [0x0000000580100000, 0x000000068af00000, 0x0000000800000000)
+  eden space 4059648K, 0% used [0x0000000580100000,0x0000000580100000,0x0000000677d80000)
+  from space 144896K, 73% used [0x0000000681280000,0x0000000687ab8000,0x000000068a000000)
+  to   space 152576K, 0% used [0x0000000677d80000,0x0000000677d80000,0x0000000681280000)
+ ParOldGen       total 2066944K, used 1095039K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 52% used [0x0000000080200000,0x00000000c2f5ff88,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+}
+Event: 443.362 GC heap before
+{Heap before GC invocations=53 (full 0):
+ PSYoungGen      total 4204544K, used 4166368K [0x0000000580100000, 0x000000068af00000, 0x0000000800000000)
+  eden space 4059648K, 100% used [0x0000000580100000,0x0000000677d80000,0x0000000677d80000)
+  from space 144896K, 73% used [0x0000000681280000,0x0000000687ab8000,0x000000068a000000)
+  to   space 152576K, 0% used [0x0000000677d80000,0x0000000677d80000,0x0000000681280000)
+ ParOldGen       total 2066944K, used 1095039K [0x0000000080200000, 0x00000000fe480000, 0x0000000580100000)
+  object space 2066944K, 52% used [0x0000000080200000,0x00000000c2f5ff88,0x00000000fe480000)
+ Metaspace       used 4637K, capacity 5128K, committed 5248K, reserved 1056768K
+  class space    used 518K, capacity 564K, committed 640K, reserved 1048576K
+
+Deoptimization events (10 events):
+Event: 3.413 Thread 0x00002b3acc35e800 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc341000 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc352800 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc35b000 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc334000 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc31d000 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.413 Thread 0x00002b3acc34a000 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 3.415 Thread 0x00002b3acc371800 Uncommon trap: reason=range_check action=make_not_entrant pc=0x00002b3ab2b48dc0 method=java.util.DualPivotQuicksort.sort([IIIZ)V @ 56
+Event: 26.744 Thread 0x00002b3acc317800 Uncommon trap: reason=unreached action=reinterpret pc=0x00002b3ab2b469dc method=java.util.HashMap.keySet()Ljava/util/Set; @ 6
+Event: 26.744 Thread 0x00002b3acc317800 Uncommon trap: reason=unreached action=reinterpret pc=0x00002b3ab2b4b17c method=java.util.HashMap.keySet()Ljava/util/Set; @ 6
+
+Internal exceptions (10 events):
+Event: 0.180 Thread 0x00000000007d2000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x0000000580114988) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jni.cpp,
+Event: 0.417 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058011a928) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.433 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058013bd38) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.433 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058013bef0) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.434 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058013e358) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.434 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058013e510) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.437 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000580141628) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.439 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x0000000580147378) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.439 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058014a508) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+Event: 0.440 Thread 0x00000000007d2000 Exception <a 'java/security/PrivilegedActionException'> (0x000000058014de78) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u5/2488/hotspot/src/share/vm/prims/jvm.cpp, line 1248]
+
+Events (10 events):
+Event: 88.500 Thread 0x00002b3acc063000 flushing nmethod 0x00002b3ab29a4b10
+Event: 93.256 Executing VM operation: ParallelGCFailedAllocation
+Event: 95.318 Executing VM operation: ParallelGCFailedAllocation done
+Event: 99.552 Executing VM operation: ParallelGCFailedAllocation
+Event: 101.408 Executing VM operation: ParallelGCFailedAllocation done
+Event: 106.927 Executing VM operation: ParallelGCFailedAllocation
+Event: 108.472 Executing VM operation: ParallelGCFailedAllocation done
+Event: 113.135 Executing VM operation: ParallelGCFailedAllocation
+Event: 115.611 Executing VM operation: ParallelGCFailedAllocation done
+Event: 290.588 Executing VM operation: ParallelGCFailedAllocation
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 00:15 209857030                          /gpfs/main/home/amm4/java/jdk1.8.0_05/bin/java
+00600000-00601000 rw-p 00000000 00:15 209857030                          /gpfs/main/home/amm4/java/jdk1.8.0_05/bin/java
+007c9000-02ae0000 rw-p 00000000 00:00 0                                  [heap]
+80200000-fe480000 rw-p 00000000 00:00 0 
+fe480000-580100000 ---p 00000000 00:00 0 
+580100000-68af00000 rw-p 00000000 00:00 0 
+6bf380000-800000000 ---p 00000000 00:00 0 
+800000000-8000a0000 rw-p 00000000 00:00 0 
+8000a0000-840000000 ---p 00000000 00:00 0 
+2b3aafde8000-2b3aafe08000 r-xp 00000000 fe:00 2217                       /lib/x86_64-linux-gnu/ld-2.13.so
+2b3aafe08000-2b3aafe0a000 rw-p 00000000 00:00 0 
+2b3ab0007000-2b3ab0008000 r--p 0001f000 fe:00 2217                       /lib/x86_64-linux-gnu/ld-2.13.so
+2b3ab0008000-2b3ab0009000 rw-p 00020000 fe:00 2217                       /lib/x86_64-linux-gnu/ld-2.13.so
+2b3ab0009000-2b3ab000a000 rw-p 00000000 00:00 0 
+2b3ab0010000-2b3ab0027000 r-xp 00000000 fe:00 2266                       /lib/x86_64-linux-gnu/libpthread-2.13.so
+2b3ab0027000-2b3ab0226000 ---p 00017000 fe:00 2266                       /lib/x86_64-linux-gnu/libpthread-2.13.so
+2b3ab0226000-2b3ab0227000 r--p 00016000 fe:00 2266                       /lib/x86_64-linux-gnu/libpthread-2.13.so
+2b3ab0227000-2b3ab0228000 rw-p 00017000 fe:00 2266                       /lib/x86_64-linux-gnu/libpthread-2.13.so
+2b3ab0228000-2b3ab022d000 rw-p 00000000 00:00 0 
+2b3ab0230000-2b3ab0247000 r-xp 00000000 00:15 223111453                  /gpfs/main/home/amm4/java/jdk1.8.0_05/lib/amd64/jli/libjli.so
+2b3ab0247000-2b3ab0446000 ---p 00017000 00:15 223111453                  /gpfs/main/home/amm4/java/jdk1.8.0_05/lib/amd64/jli/libjli.so
+2b3ab0446000-2b3ab0447000 rw-p 00016000 00:15 223111453                  /gpfs/main/home/amm4/java/jdk1.8.0_05/lib/amd64/jli/libjli.so
+2b3ab0448000-2b3ab044a000 r-xp 00000000 fe:00 2254                       /lib/x86_64-linux-gnu/libdl-2.13.so
+2b3ab044a000-2b3ab064a000 ---p 00002000 fe:00 2254                       /lib/x86_64-linux-gnu/libdl-2.13.so
+2b3ab064a000-2b3ab064b000 r--p 00002000 fe:00 2254                       /lib/x86_64-linux-gnu/libdl-2.13.so
+2b3ab064b000-2b3ab064c000 rw-p 00003000 fe:00 2254                       /lib/x86_64-linux-gnu/libdl-2.13.so
+2b3ab0650000-2b3ab07d1000 r-xp 00000000 fe:00 2250                       /lib/x86_64-linux-gnu/libc-2.13.so
+2b3ab07d1000-2b3ab09d1000 ---p 00181000 fe:00 2250                       /lib/x86_64-linux-gnu/libc-2.13.so
+2b3ab09d1000-2b3ab09d5000 r--p 00181000 fe:00 2250                       /lib/x86_64-linux-gnu/libc-2.13.so
+2b3ab09d5000-2b3ab09d6000 rw-p 00185000 fe:00 2250                       /lib/x86_64-linux-gnu/libc-2.13.so
+2b3ab09d6000-2b3ab09dd000 rw-p 00000000 00:00 0 
+2b3ab09e0000-2b3ab15fa000 r-xp 00000000 00:15 224768859                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/server/libjvm.so
+2b3ab15fa000-2b3ab17f9000 ---p 00c1a000 00:15 224768859                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/server/libjvm.so
+2b3ab17f9000-2b3ab18c2000 rw-p 00c19000 00:15 224768859                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/server/libjvm.so
+2b3ab18c2000-2b3ab1903000 rw-p 00000000 00:00 0 
+2b3ab1938000-2b3ab19b9000 r-xp 00000000 fe:00 2255                       /lib/x86_64-linux-gnu/libm-2.13.so
+2b3ab19b9000-2b3ab1bb8000 ---p 00081000 fe:00 2255                       /lib/x86_64-linux-gnu/libm-2.13.so
+2b3ab1bb8000-2b3ab1bb9000 r--p 00080000 fe:00 2255                       /lib/x86_64-linux-gnu/libm-2.13.so
+2b3ab1bb9000-2b3ab1bba000 rw-p 00081000 fe:00 2255                       /lib/x86_64-linux-gnu/libm-2.13.so
+2b3ab1bba000-2b3ab1bbd000 ---p 00000000 00:00 0 
+2b3ab1bbd000-2b3ab1cbb000 rw-p 00000000 00:00 0 
+2b3ab1cf0000-2b3ab1cf7000 r-xp 00000000 fe:00 2268                       /lib/x86_64-linux-gnu/librt-2.13.so
+2b3ab1cf7000-2b3ab1ef6000 ---p 00007000 fe:00 2268                       /lib/x86_64-linux-gnu/librt-2.13.so
+2b3ab1ef6000-2b3ab1ef7000 r--p 00006000 fe:00 2268                       /lib/x86_64-linux-gnu/librt-2.13.so
+2b3ab1ef7000-2b3ab1ef8000 rw-p 00007000 fe:00 2268                       /lib/x86_64-linux-gnu/librt-2.13.so
+2b3ab1ef8000-2b3ab1f05000 r-xp 00000000 00:15 225596601                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libverify.so
+2b3ab1f05000-2b3ab2105000 ---p 0000d000 00:15 225596601                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libverify.so
+2b3ab2105000-2b3ab2107000 rw-p 0000d000 00:15 225596601                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libverify.so
+2b3ab2108000-2b3ab2132000 r-xp 00000000 00:15 225596531                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libjava.so
+2b3ab2132000-2b3ab2332000 ---p 0002a000 00:15 225596531                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libjava.so
+2b3ab2332000-2b3ab2334000 rw-p 0002a000 00:15 225596531                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libjava.so
+2b3ab2334000-2b3ab2335000 ---p 00000000 00:00 0 
+2b3ab2335000-2b3ab2336000 rw-p 00000000 00:00 0 
+2b3ab2338000-2b3ab23bb000 r--s 00000000 00:0e 40503423                   /run/nscd/dbdPj7wV (deleted)
+2b3ab23c0000-2b3ab23c8000 rw-s 00000000 fe:04 79                         /tmp/hsperfdata_amm4/30794
+2b3ab23c8000-2b3ab23e4000 r-xp 00000000 00:15 225596603                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libzip.so
+2b3ab23e4000-2b3ab25e3000 ---p 0001c000 00:15 225596603                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libzip.so
+2b3ab25e3000-2b3ab25e4000 rw-p 0001b000 00:15 225596603                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libzip.so
+2b3ab25e4000-2b3ab2c84000 rwxp 00000000 00:00 0 
+2b3ab2c84000-2b3ac15e4000 ---p 00000000 00:00 0 
+2b3ac15e4000-2b3ac15ff000 rw-p 00000000 00:00 0 
+2b3ac15ff000-2b3ac19a4000 ---p 00000000 00:00 0 
+2b3ac19a4000-2b3ac1d96000 rw-p 00000000 00:00 0 
+2b3ac1d96000-2b3ac41a3000 ---p 00000000 00:00 0 
+2b3ac41a3000-2b3ac49fb000 rw-p 00000000 00:00 0 
+2b3ac49fb000-2b3ac55a3000 ---p 00000000 00:00 0 
+2b3ac55a3000-2b3ac5996000 rw-p 00000000 00:00 0 
+2b3ac5996000-2b3ac7da4000 ---p 00000000 00:00 0 
+2b3ac7da4000-2b3ac7da5000 ---p 00000000 00:00 0 
+2b3ac7da5000-2b3ac7ea5000 rw-p 00000000 00:00 0 
+2b3ac7ea5000-2b3ac7ea6000 ---p 00000000 00:00 0 
+2b3ac7ea6000-2b3ac7fa6000 rw-p 00000000 00:00 0 
+2b3ac7fa6000-2b3ac7fa7000 ---p 00000000 00:00 0 
+2b3ac7fa7000-2b3ac80a7000 rw-p 00000000 00:00 0 
+2b3ac80a7000-2b3ac80a8000 ---p 00000000 00:00 0 
+2b3ac80a8000-2b3ac81a8000 rw-p 00000000 00:00 0 
+2b3ac81a8000-2b3ac81a9000 ---p 00000000 00:00 0 
+2b3ac81a9000-2b3ac82a9000 rw-p 00000000 00:00 0 
+2b3ac82a9000-2b3ac82aa000 ---p 00000000 00:00 0 
+2b3ac82aa000-2b3ac83aa000 rw-p 00000000 00:00 0 
+2b3ac83aa000-2b3ac83ab000 ---p 00000000 00:00 0 
+2b3ac83ab000-2b3ac84ab000 rw-p 00000000 00:00 0 
+2b3ac84ab000-2b3ac84ac000 ---p 00000000 00:00 0 
+2b3ac84ac000-2b3ac85ac000 rw-p 00000000 00:00 0 
+2b3ac85ac000-2b3ac85ad000 ---p 00000000 00:00 0 
+2b3ac85ad000-2b3ac86ad000 rw-p 00000000 00:00 0 
+2b3ac86ad000-2b3ac86ae000 ---p 00000000 00:00 0 
+2b3ac86ae000-2b3ac87ae000 rw-p 00000000 00:00 0 
+2b3ac87ae000-2b3ac87af000 ---p 00000000 00:00 0 
+2b3ac87af000-2b3ac88af000 rw-p 00000000 00:00 0 
+2b3ac88af000-2b3ac88b0000 ---p 00000000 00:00 0 
+2b3ac88b0000-2b3ac89b0000 rw-p 00000000 00:00 0 
+2b3ac89b0000-2b3ac89b1000 ---p 00000000 00:00 0 
+2b3ac89b1000-2b3ac8ab1000 rw-p 00000000 00:00 0 
+2b3ac8ab1000-2b3ac8ab2000 ---p 00000000 00:00 0 
+2b3ac8ab2000-2b3ac8bb2000 rw-p 00000000 00:00 0 
+2b3ac8bb2000-2b3ac8bb3000 ---p 00000000 00:00 0 
+2b3ac8bb3000-2b3ac8cb3000 rw-p 00000000 00:00 0 
+2b3ac8cb3000-2b3ac8cb4000 ---p 00000000 00:00 0 
+2b3ac8cb4000-2b3ac8db4000 rw-p 00000000 00:00 0 
+2b3ac8db4000-2b3ac8db5000 ---p 00000000 00:00 0 
+2b3ac8db5000-2b3ac8eb5000 rw-p 00000000 00:00 0 
+2b3ac8eb5000-2b3ac8eb6000 ---p 00000000 00:00 0 
+2b3ac8eb6000-2b3ac8fb6000 rw-p 00000000 00:00 0 
+2b3ac8fb6000-2b3ac8fb7000 ---p 00000000 00:00 0 
+2b3ac8fb7000-2b3ac90b7000 rw-p 00000000 00:00 0 
+2b3ac90b7000-2b3ac90b8000 ---p 00000000 00:00 0 
+2b3ac90b8000-2b3ac91b8000 rw-p 00000000 00:00 0 
+2b3ac91b8000-2b3ac91b9000 ---p 00000000 00:00 0 
+2b3ac91b9000-2b3ac92b9000 rw-p 00000000 00:00 0 
+2b3ac92b9000-2b3ac92ba000 ---p 00000000 00:00 0 
+2b3ac92ba000-2b3ac93ba000 rw-p 00000000 00:00 0 
+2b3ac93ba000-2b3ac93bb000 ---p 00000000 00:00 0 
+2b3ac93bb000-2b3ac94bb000 rw-p 00000000 00:00 0 
+2b3ac94bb000-2b3ac94bc000 ---p 00000000 00:00 0 
+2b3ac94bc000-2b3ac95bc000 rw-p 00000000 00:00 0 
+2b3ac95bc000-2b3ac95bd000 ---p 00000000 00:00 0 
+2b3ac95bd000-2b3ac96bd000 rw-p 00000000 00:00 0 
+2b3ac96bd000-2b3ac96be000 ---p 00000000 00:00 0 
+2b3ac96be000-2b3ac97be000 rw-p 00000000 00:00 0 
+2b3ac97be000-2b3ac97bf000 ---p 00000000 00:00 0 
+2b3ac97bf000-2b3ac98bf000 rw-p 00000000 00:00 0 
+2b3ac98bf000-2b3ac98c0000 ---p 00000000 00:00 0 
+2b3ac98c0000-2b3ac99c0000 rw-p 00000000 00:00 0 
+2b3ac99c0000-2b3ac99c1000 ---p 00000000 00:00 0 
+2b3ac99c1000-2b3ac9ac1000 rw-p 00000000 00:00 0 
+2b3ac9ac1000-2b3ac9ac2000 ---p 00000000 00:00 0 
+2b3ac9ac2000-2b3ac9bc2000 rw-p 00000000 00:00 0 
+2b3ac9bc2000-2b3ac9bc3000 ---p 00000000 00:00 0 
+2b3ac9bc3000-2b3ac9cc3000 rw-p 00000000 00:00 0 
+2b3ac9cc3000-2b3ac9cc4000 ---p 00000000 00:00 0 
+2b3ac9cc4000-2b3ac9dc4000 rw-p 00000000 00:00 0 
+2b3ac9dc4000-2b3ac9dc5000 ---p 00000000 00:00 0 
+2b3ac9dc5000-2b3ac9ec5000 rw-p 00000000 00:00 0 
+2b3ac9ec5000-2b3ac9ec6000 ---p 00000000 00:00 0 
+2b3ac9ec6000-2b3ac9fc6000 rw-p 00000000 00:00 0 
+2b3ac9fc6000-2b3ac9fc7000 ---p 00000000 00:00 0 
+2b3ac9fc7000-2b3aca0c7000 rw-p 00000000 00:00 0 
+2b3aca0c7000-2b3aca0c8000 ---p 00000000 00:00 0 
+2b3aca0c8000-2b3aca1c8000 rw-p 00000000 00:00 0 
+2b3aca1c8000-2b3aca1c9000 ---p 00000000 00:00 0 
+2b3aca1c9000-2b3aca2c9000 rw-p 00000000 00:00 0 
+2b3aca2c9000-2b3aca2ca000 ---p 00000000 00:00 0 
+2b3aca2ca000-2b3aca3ca000 rw-p 00000000 00:00 0 
+2b3aca3ca000-2b3aca3cb000 ---p 00000000 00:00 0 
+2b3aca3cb000-2b3aca4cb000 rw-p 00000000 00:00 0 
+2b3aca4cb000-2b3aca4cc000 ---p 00000000 00:00 0 
+2b3aca4cc000-2b3aca5cc000 rw-p 00000000 00:00 0 
+2b3aca5cc000-2b3aca5cd000 ---p 00000000 00:00 0 
+2b3aca5cd000-2b3aca6cd000 rw-p 00000000 00:00 0 
+2b3aca6cd000-2b3aca6ce000 ---p 00000000 00:00 0 
+2b3aca6ce000-2b3aca7ce000 rw-p 00000000 00:00 0 
+2b3aca7ce000-2b3aca7cf000 ---p 00000000 00:00 0 
+2b3aca7cf000-2b3aca8cf000 rw-p 00000000 00:00 0 
+2b3aca8cf000-2b3aca8d2000 ---p 00000000 00:00 0 
+2b3aca8d2000-2b3aca9d0000 rw-p 00000000 00:00 0 
+2b3aca9d0000-2b3aca9d3000 ---p 00000000 00:00 0 
+2b3aca9d3000-2b3acaad1000 rw-p 00000000 00:00 0 
+2b3acaad1000-2b3acaad2000 ---p 00000000 00:00 0 
+2b3acaad2000-2b3acabd2000 rw-p 00000000 00:00 0 
+2b3acabd8000-2b3acabf0000 r--s 004ba000 00:15 210377402                  /gpfs/main/home/amm4/git/generalResearch/output/RSBOutput/Chicken/Chicken.jar
+2b3acabf0000-2b3acac00000 r-xp 00000000 00:15 225596716                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnio.so
+2b3acac00000-2b3acae00000 ---p 00010000 00:15 225596716                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnio.so
+2b3acae00000-2b3acae01000 rw-p 00010000 00:15 225596716                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnio.so
+2b3acae08000-2b3acae1e000 r-xp 00000000 00:15 225596671                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnet.so
+2b3acae1e000-2b3acb01d000 ---p 00016000 00:15 225596671                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnet.so
+2b3acb01d000-2b3acb01e000 rw-p 00015000 00:15 225596671                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/amd64/libnet.so
+2b3acb020000-2b3acb025000 r--s 00092000 00:15 223940354                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/jsse.jar
+2b3acb028000-2b3acb03f000 r--s 00122000 fe:04 104                        /tmp/jar_cache152855067717747336.tmp (deleted)
+2b3acb040000-2b3acb05e000 r--s 00180000 fe:04 110                        /tmp/jar_cache4271450694698081822.tmp (deleted)
+2b3acb060000-2b3acb078000 r--s 0010a000 fe:04 134                        /tmp/jar_cache2535241954852790635.tmp (deleted)
+2b3acb078000-2b3acb07b000 ---p 00000000 00:00 0 
+2b3acb07b000-2b3acb179000 rw-p 00000000 00:00 0 
+2b3acb179000-2b3acb17c000 ---p 00000000 00:00 0 
+2b3acb17c000-2b3acb27a000 rw-p 00000000 00:00 0 
+2b3acb27a000-2b3acb27d000 ---p 00000000 00:00 0 
+2b3acb27d000-2b3acb37b000 rw-p 00000000 00:00 0 
+2b3acb37b000-2b3acb37e000 ---p 00000000 00:00 0 
+2b3acb37e000-2b3acb47c000 rw-p 00000000 00:00 0 
+2b3acb47c000-2b3acb47f000 ---p 00000000 00:00 0 
+2b3acb47f000-2b3acb57d000 rw-p 00000000 00:00 0 
+2b3acb57d000-2b3acb580000 ---p 00000000 00:00 0 
+2b3acb580000-2b3acb67e000 rw-p 00000000 00:00 0 
+2b3acb67e000-2b3acb681000 ---p 00000000 00:00 0 
+2b3acb681000-2b3acb77f000 rw-p 00000000 00:00 0 
+2b3acb77f000-2b3acb782000 ---p 00000000 00:00 0 
+2b3acb782000-2b3acb880000 rw-p 00000000 00:00 0 
+2b3acb880000-2b3acb883000 ---p 00000000 00:00 0 
+2b3acb883000-2b3acb981000 rw-p 00000000 00:00 0 
+2b3acb981000-2b3acb984000 ---p 00000000 00:00 0 
+2b3acb984000-2b3acba82000 rw-p 00000000 00:00 0 
+2b3acba82000-2b3acba85000 ---p 00000000 00:00 0 
+2b3acba85000-2b3acbb83000 rw-p 00000000 00:00 0 
+2b3acbb83000-2b3acbb86000 ---p 00000000 00:00 0 
+2b3acbb86000-2b3acbc84000 rw-p 00000000 00:00 0 
+2b3acbc84000-2b3acbc87000 ---p 00000000 00:00 0 
+2b3acbc87000-2b3acbd85000 rw-p 00000000 00:00 0 
+2b3acbd85000-2b3acbd88000 ---p 00000000 00:00 0 
+2b3acbd88000-2b3acbe86000 rw-p 00000000 00:00 0 
+2b3acbe86000-2b3acbe89000 ---p 00000000 00:00 0 
+2b3acbe89000-2b3acbf8f000 rw-p 00000000 00:00 0 
+2b3acc000000-2b3acd9c8000 rw-p 00000000 00:00 0 
+2b3acd9c8000-2b3ad0000000 ---p 00000000 00:00 0 
+2b3ad0000000-2b3b102c7000 rw-p 00000000 00:00 0 
+2b3b102c7000-2b3b10647000 ---p 00000000 00:00 0 
+2b3b10647000-2b3b10718000 rw-p 00000000 00:00 0 
+2b3b10718000-2b3b108ed000 r--s 03c4d000 00:15 223939710                  /gpfs/main/home/amm4/java/jdk1.8.0_05/jre/lib/rt.jar
+2b3b108ed000-2b3b18dc0000 rw-p 00000000 00:00 0 
+2b3b18dc0000-2b3b18dc1000 ---p 00000000 00:00 0 
+2b3b18dc1000-2b3b18ec1000 rw-p 00000000 00:00 0 
+2b3b18ec1000-2b3b18ec4000 ---p 00000000 00:00 0 
+2b3b18ec4000-2b3b18fc2000 rw-p 00000000 00:00 0 
+2b3b18fc2000-2b3b18fc5000 ---p 00000000 00:00 0 
+2b3b18fc5000-2b3b190c3000 rw-p 00000000 00:00 0 
+2b3b190c3000-2b3b190c6000 ---p 00000000 00:00 0 
+2b3b190c6000-2b3b191c4000 rw-p 00000000 00:00 0 
+2b3b191c4000-2b3b191c7000 ---p 00000000 00:00 0 
+2b3b191c7000-2b3b192c5000 rw-p 00000000 00:00 0 
+2b3b192c5000-2b3b192c8000 ---p 00000000 00:00 0 
+2b3b192c8000-2b3b193c6000 rw-p 00000000 00:00 0 
+2b3b193c6000-2b3b193c9000 ---p 00000000 00:00 0 
+2b3b193c9000-2b3b194c7000 rw-p 00000000 00:00 0 
+2b3b194c7000-2b3b194ca000 ---p 00000000 00:00 0 
+2b3b194ca000-2b3b195c8000 rw-p 00000000 00:00 0 
+2b3b195c8000-2b3b195cb000 ---p 00000000 00:00 0 
+2b3b195cb000-2b3b196c9000 rw-p 00000000 00:00 0 
+2b3b196c9000-2b3b196cc000 ---p 00000000 00:00 0 
+2b3b196cc000-2b3b197ca000 rw-p 00000000 00:00 0 
+2b3b197ca000-2b3b197cd000 ---p 00000000 00:00 0 
+2b3b197cd000-2b3b198cb000 rw-p 00000000 00:00 0 
+2b3b198cb000-2b3b198ce000 ---p 00000000 00:00 0 
+2b3b198ce000-2b3b199cc000 rw-p 00000000 00:00 0 
+2b3b199cc000-2b3b199cf000 ---p 00000000 00:00 0 
+2b3b199cf000-2b3b19acd000 rw-p 00000000 00:00 0 
+2b3b19acd000-2b3b19ad0000 ---p 00000000 00:00 0 
+2b3b19ad0000-2b3b19bce000 rw-p 00000000 00:00 0 
+2b3b19bce000-2b3b19bd1000 ---p 00000000 00:00 0 
+2b3b19bd1000-2b3b19ccf000 rw-p 00000000 00:00 0 
+2b3b19ccf000-2b3b19cd2000 ---p 00000000 00:00 0 
+2b3b19cd2000-2b3b19dd0000 rw-p 00000000 00:00 0 
+2b3b19dd0000-2b3b19dd3000 ---p 00000000 00:00 0 
+2b3b19dd3000-2b3b19ed1000 rw-p 00000000 00:00 0 
+2b3b19ed1000-2b3b19ed4000 ---p 00000000 00:00 0 
+2b3b19ed4000-2b3b19fd2000 rw-p 00000000 00:00 0 
+2b3b19fd2000-2b3b19fd5000 ---p 00000000 00:00 0 
+2b3b19fd5000-2b3b1a0d3000 rw-p 00000000 00:00 0 
+2b3b1a0d3000-2b3b1a0d6000 ---p 00000000 00:00 0 
+2b3b1a0d6000-2b3b1a1d4000 rw-p 00000000 00:00 0 
+2b3b1a1d4000-2b3b1a1d7000 ---p 00000000 00:00 0 
+2b3b1a1d7000-2b3b1a2d5000 rw-p 00000000 00:00 0 
+2b3b1a2dd000-2b3b1a2e0000 ---p 00000000 00:00 0 
+2b3b1a2e0000-2b3b1a3de000 rw-p 00000000 00:00 0 
+2b3b1a3de000-2b3b1a3e1000 ---p 00000000 00:00 0 
+2b3b1a3e1000-2b3b1a4df000 rw-p 00000000 00:00 0 
+2b3b1a4df000-2b3b1a4e2000 ---p 00000000 00:00 0 
+2b3b1a4e2000-2b3b1a5e0000 rw-p 00000000 00:00 0 
+2b3b1a5e8000-2b3b1a5eb000 ---p 00000000 00:00 0 
+2b3b1a5eb000-2b3b1a6e9000 rw-p 00000000 00:00 0 
+2b3b1a6e9000-2b3b1a6ec000 ---p 00000000 00:00 0 
+2b3b1a6ec000-2b3b1a7ea000 rw-p 00000000 00:00 0 
+2b3b1a7ea000-2b3b1a7ed000 ---p 00000000 00:00 0 
+2b3b1a7ed000-2b3b1a8eb000 rw-p 00000000 00:00 0 
+2b3b1a8eb000-2b3b1a8ee000 ---p 00000000 00:00 0 
+2b3b1a8ee000-2b3b1a9ec000 rw-p 00000000 00:00 0 
+2b3b1a9f4000-2b3b1a9f7000 ---p 00000000 00:00 0 
+2b3b1a9f7000-2b3b1aaf5000 rw-p 00000000 00:00 0 
+2b3b1aaf5000-2b3b1aaf8000 ---p 00000000 00:00 0 
+2b3b1aaf8000-2b3b1abf6000 rw-p 00000000 00:00 0 
+2b3b1abf6000-2b3b1abf9000 ---p 00000000 00:00 0 
+2b3b1abf9000-2b3b1acf7000 rw-p 00000000 00:00 0 
+2b3b1acf7000-2b3b1acfa000 ---p 00000000 00:00 0 
+2b3b1acfa000-2b3b1adf8000 rw-p 00000000 00:00 0 
+2b3b1adf8000-2b3b1adfb000 ---p 00000000 00:00 0 
+2b3b1adfb000-2b3b1aef9000 rw-p 00000000 00:00 0 
+2b3b1aef9000-2b3b1aefc000 ---p 00000000 00:00 0 
+2b3b1aefc000-2b3b1affa000 rw-p 00000000 00:00 0 
+2b3b1affa000-2b3b1affd000 ---p 00000000 00:00 0 
+2b3b1affd000-2b3b1b0fb000 rw-p 00000000 00:00 0 
+2b3b1b103000-2b3b1b106000 ---p 00000000 00:00 0 
+2b3b1b106000-2b3b1b204000 rw-p 00000000 00:00 0 
+2b3b1b204000-2b3b1b207000 ---p 00000000 00:00 0 
+2b3b1b207000-2b3b1b305000 rw-p 00000000 00:00 0 
+2b3b1b305000-2b3b1b308000 ---p 00000000 00:00 0 
+2b3b1b308000-2b3b1b406000 rw-p 00000000 00:00 0 
+2b3b1b406000-2b3b1b409000 ---p 00000000 00:00 0 
+2b3b1b409000-2b3b1b507000 rw-p 00000000 00:00 0 
+2b3b1b507000-2b3b1b50a000 ---p 00000000 00:00 0 
+2b3b1b50a000-2b3b1b608000 rw-p 00000000 00:00 0 
+2b3b1b608000-2b3b1b60b000 ---p 00000000 00:00 0 
+2b3b1b60b000-2b3b1b709000 rw-p 00000000 00:00 0 
+2b3b1b709000-2b3b1b70c000 ---p 00000000 00:00 0 
+2b3b1b70c000-2b3b1b80a000 rw-p 00000000 00:00 0 
+2b3b1b80a000-2b3b1b80d000 ---p 00000000 00:00 0 
+2b3b1b80d000-2b3b1b90b000 rw-p 00000000 00:00 0 
+2b3b1b90b000-2b3b1b90e000 ---p 00000000 00:00 0 
+2b3b1b90e000-2b3b1ba0c000 rw-p 00000000 00:00 0 
+2b3b1ba0c000-2b3b1ba0f000 ---p 00000000 00:00 0 
+2b3b1ba0f000-2b3b1bb0d000 rw-p 00000000 00:00 0 
+2b3b1bb0d000-2b3b1bb10000 ---p 00000000 00:00 0 
+2b3b1bb10000-2b3b1bc0e000 rw-p 00000000 00:00 0 
+2b3b1bc0e000-2b3b1bc11000 ---p 00000000 00:00 0 
+2b3b1bc11000-2b3b1bd0f000 rw-p 00000000 00:00 0 
+2b3b1bd0f000-2b3b1bd12000 ---p 00000000 00:00 0 
+2b3b1bd12000-2b3b1be10000 rw-p 00000000 00:00 0 
+2b3b1be10000-2b3b1be13000 ---p 00000000 00:00 0 
+2b3b1be13000-2b3b1bf11000 rw-p 00000000 00:00 0 
+2b3b1c000000-2b3b1d43c000 rw-p 00000000 00:00 0 
+2b3b1d43c000-2b3b20000000 ---p 00000000 00:00 0 
+2b3b20000000-2b3b20003000 ---p 00000000 00:00 0 
+2b3b20003000-2b3b20101000 rw-p 00000000 00:00 0 
+2b3b20101000-2b3b20104000 ---p 00000000 00:00 0 
+2b3b20104000-2b3b20202000 rw-p 00000000 00:00 0 
+2b3b20202000-2b3b20205000 ---p 00000000 00:00 0 
+2b3b20205000-2b3b20303000 rw-p 00000000 00:00 0 
+2b3b20303000-2b3b20306000 ---p 00000000 00:00 0 
+2b3b20306000-2b3b20404000 rw-p 00000000 00:00 0 
+2b3b20404000-2b3b20407000 ---p 00000000 00:00 0 
+2b3b20407000-2b3b20505000 rw-p 00000000 00:00 0 
+2b3b20505000-2b3b20508000 ---p 00000000 00:00 0 
+2b3b20508000-2b3b20606000 rw-p 00000000 00:00 0 
+2b3b20606000-2b3b20609000 ---p 00000000 00:00 0 
+2b3b20609000-2b3b20707000 rw-p 00000000 00:00 0 
+2b3b20707000-2b3b2070a000 ---p 00000000 00:00 0 
+2b3b2070a000-2b3b20808000 rw-p 00000000 00:00 0 
+2b3b20808000-2b3b2080b000 ---p 00000000 00:00 0 
+2b3b2080b000-2b3b20909000 rw-p 00000000 00:00 0 
+2b3b20909000-2b3b2090c000 ---p 00000000 00:00 0 
+2b3b2090c000-2b3b20a0a000 rw-p 00000000 00:00 0 
+2b3b20a0a000-2b3b20a0d000 ---p 00000000 00:00 0 
+2b3b20a0d000-2b3b20b0b000 rw-p 00000000 00:00 0 
+2b3b20b0b000-2b3b20b0e000 ---p 00000000 00:00 0 
+2b3b20b0e000-2b3b20c0c000 rw-p 00000000 00:00 0 
+2b3b20c0c000-2b3b20c0f000 ---p 00000000 00:00 0 
+2b3b20c0f000-2b3b20d0d000 rw-p 00000000 00:00 0 
+2b3b20d0d000-2b3b20d10000 ---p 00000000 00:00 0 
+2b3b20d10000-2b3b20e0e000 rw-p 00000000 00:00 0 
+2b3b20e0e000-2b3b20e11000 ---p 00000000 00:00 0 
+2b3b20e11000-2b3b20f0f000 rw-p 00000000 00:00 0 
+2b3b20f0f000-2b3b20f12000 ---p 00000000 00:00 0 
+2b3b20f12000-2b3b21010000 rw-p 00000000 00:00 0 
+2b3b21010000-2b3b21013000 ---p 00000000 00:00 0 
+2b3b21013000-2b3b21111000 rw-p 00000000 00:00 0 
+2b3b21111000-2b3b21114000 ---p 00000000 00:00 0 
+2b3b21114000-2b3b21212000 rw-p 00000000 00:00 0 
+2b3b21212000-2b3b21215000 ---p 00000000 00:00 0 
+2b3b21215000-2b3b21313000 rw-p 00000000 00:00 0 
+2b3b21313000-2b3b21316000 ---p 00000000 00:00 0 
+2b3b21316000-2b3b21414000 rw-p 00000000 00:00 0 
+2b3b214c7000-2b3b214ca000 ---p 00000000 00:00 0 
+2b3b214ca000-2b3b215c8000 rw-p 00000000 00:00 0 
+2b3b24000000-2b3b255ee000 rw-p 00000000 00:00 0 
+2b3b255ee000-2b3b28000000 ---p 00000000 00:00 0 
+2b3b28000000-2b3b288be000 rw-p 00000000 00:00 0 
+2b3b288be000-2b3b2c000000 ---p 00000000 00:00 0 
+2b3b2c000000-2b3b2cedd000 rw-p 00000000 00:00 0 
+2b3b2cedd000-2b3b30000000 ---p 00000000 00:00 0 
+2b3b30000000-2b3b3141e000 rw-p 00000000 00:00 0 
+2b3b3141e000-2b3b34000000 ---p 00000000 00:00 0 
+2b3b34000000-2b3b35af2000 rw-p 00000000 00:00 0 
+2b3b35af2000-2b3b38000000 ---p 00000000 00:00 0 
+7fff661d5000-7fff661f6000 rw-p 00000000 00:00 0                          [stack]
+7fff66200000-7fff66201000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+java_command: Chicken/Chicken.jar /gpfs/main/home/amm4/git/generalResearch/output/RSBOutput/Chicken/Chicken6 3978
+java_class_path (initial): Chicken/Chicken.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/tmp/9242168.3978.short.q:/usr/local/bin:/bin:/usr/bin
+SHELL=/bin/csh
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xa2fc90], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0xa2fc90], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x89b4b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x89b4b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x89b4b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x89b4b0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x89cc50], sa_mask[0]=0x00000000, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x89df00], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: [libjvm.so+0x89df00], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGTERM: [libjvm.so+0x89df00], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x89df00], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:PRETTY_NAME="Debian GNU/Linux 7 (wheezy)"
+NAME="Debian GNU/Linux"
+VERSION_ID="7"
+VERSION="7 (wheezy)"
+ID=debian
+ANSI_COLOR="1;31"
+HOME_URL="http://www.debian.org/"
+SUPPORT_URL="http://www.debian.org/support/"
+BUG_REPORT_URL="http://bugs.debian.org/"
+
+uname:Linux 3.2.0-4-amd64 #1 SMP Debian 3.2.60-1+deb7u1 x86_64
+libc:glibc 2.13 NPTL 2.13 
+rlimit: STACK infinity, CORE 0k, NPROC 1032840, NOFILE 4096, AS infinity
+load average:683.46 697.19 717.01
+
+/proc/meminfo:
+MemTotal:       132282336 kB
+MemFree:          267568 kB
+Buffers:            1688 kB
+Cached:            27108 kB
+SwapCached:      1791908 kB
+Active:         121963264 kB
+Inactive:        9341464 kB
+Active(anon):   121957460 kB
+Inactive(anon):  9318268 kB
+Active(file):       5804 kB
+Inactive(file):    23196 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:       8388604 kB
+SwapFree:        1561452 kB
+Dirty:               172 kB
+Writeback:          3420 kB
+AnonPages:      129533956 kB
+Mapped:            10456 kB
+Shmem:                44 kB
+Slab:              93160 kB
+SReclaimable:      32568 kB
+SUnreclaim:        60592 kB
+KernelStack:       28936 kB
+PageTables:       288940 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    74529772 kB
+Committed_AS:   191684672 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      493560 kB
+VmallocChunk:   34258598592 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      153984 kB
+DirectMap2M:     7168000 kB
+DirectMap1G:    126877696 kB
+
+
+CPU:total 64 (16 cores per cpu, 1 threads per core) family 21 model 2 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 32
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.62
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 1
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 33
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.86
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 2
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 34
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.95
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 3
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 35
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 4
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 36
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.95
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 5
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 37
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 6
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 38
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.95
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 7
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 39
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.91
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 8
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 40
+initial apicid	: 8
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 9
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 41
+initial apicid	: 9
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 10
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 42
+initial apicid	: 10
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 11
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 43
+initial apicid	: 11
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 12
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 44
+initial apicid	: 12
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 13
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 45
+initial apicid	: 13
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 14
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 46
+initial apicid	: 14
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 15
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 47
+initial apicid	: 15
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 16
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 64
+initial apicid	: 32
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 17
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 65
+initial apicid	: 33
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 18
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 66
+initial apicid	: 34
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 19
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 67
+initial apicid	: 35
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 20
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 68
+initial apicid	: 36
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 21
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 69
+initial apicid	: 37
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 22
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 70
+initial apicid	: 38
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 23
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 71
+initial apicid	: 39
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 24
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 72
+initial apicid	: 40
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 25
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 73
+initial apicid	: 41
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 26
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 74
+initial apicid	: 42
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.00
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 27
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 75
+initial apicid	: 43
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 28
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 76
+initial apicid	: 44
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 29
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 77
+initial apicid	: 45
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 30
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 78
+initial apicid	: 46
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.00
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 31
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 1
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 79
+initial apicid	: 47
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.01
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 32
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 96
+initial apicid	: 64
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.97
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 33
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 97
+initial apicid	: 65
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 34
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 98
+initial apicid	: 66
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.96
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 35
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 99
+initial apicid	: 67
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.92
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 36
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 100
+initial apicid	: 68
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 37
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 101
+initial apicid	: 69
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 38
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 102
+initial apicid	: 70
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.97
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 39
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 103
+initial apicid	: 71
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.93
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 40
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 104
+initial apicid	: 72
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 41
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 105
+initial apicid	: 73
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 42
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 106
+initial apicid	: 74
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 43
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 107
+initial apicid	: 75
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 44
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 108
+initial apicid	: 76
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 45
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 109
+initial apicid	: 77
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 46
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 110
+initial apicid	: 78
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.00
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 47
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 2
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 111
+initial apicid	: 79
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.91
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 48
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 128
+initial apicid	: 96
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.97
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 49
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 129
+initial apicid	: 97
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.91
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 50
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 130
+initial apicid	: 98
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.93
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 51
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 131
+initial apicid	: 99
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.89
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 52
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 132
+initial apicid	: 100
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.98
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 53
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 133
+initial apicid	: 101
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.88
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 54
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 134
+initial apicid	: 102
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.93
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 55
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 135
+initial apicid	: 103
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.01
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 56
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 0
+cpu cores	: 8
+apicid		: 136
+initial apicid	: 104
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 57
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 1
+cpu cores	: 8
+apicid		: 137
+initial apicid	: 105
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.94
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 58
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 2
+cpu cores	: 8
+apicid		: 138
+initial apicid	: 106
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 59
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 3
+cpu cores	: 8
+apicid		: 139
+initial apicid	: 107
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 5000.08
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 60
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 4
+cpu cores	: 8
+apicid		: 140
+initial apicid	: 108
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 61
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 1400.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 5
+cpu cores	: 8
+apicid		: 141
+initial apicid	: 109
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 62
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 6
+cpu cores	: 8
+apicid		: 142
+initial apicid	: 110
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+processor	: 63
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 2
+model name	: AMD Opteron(tm) Processor 6380                 
+stepping	: 0
+microcode	: 0x600081c
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 3
+siblings	: 16
+core id		: 7
+cpu cores	: 8
+apicid		: 143
+initial apicid	: 111
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 popcnt aes xsave avx f16c lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 nodeid_msr tbm topoext perfctr_core arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold
+bogomips	: 4999.99
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate [9] [10]
+
+
+
+Memory: 4k page, physical 132282336k(267320k free), swap 8388604k(1561464k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.5-b02) for linux-amd64 JRE (1.8.0_05-b13), built on Mar 18 2014 00:29:27 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Mon Sep 15 15:52:16 2014
+elapsed time: 2650 seconds
+

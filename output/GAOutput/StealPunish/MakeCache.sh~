@@ -1,0 +1,6 @@
+#!/usr/local/bin/bash
+#$ -cwd
+#PBS -e /dev/null
+#PBS -o /dev/null
+
+/gpfs/main/home/amm4/java/jdk1.8.0_05/bin/java -jar SP_FSS_2to2.jar "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/ShareReciprocate/ShareReciprocate14" .1 $SGE_TASK_ID .2

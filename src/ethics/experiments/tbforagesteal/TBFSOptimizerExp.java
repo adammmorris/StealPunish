@@ -360,12 +360,16 @@ public class TBFSOptimizerExp {
 	
 	public static void runInfinteGASoftMax_mutation(int nGenerations, double temperature, String cacheFilePath, String outputPath, double mutation){
 		
+		/* SET THIS TO RIGHT PARAMS FOR GAME */
+		
+		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-10,10,10,3);
+		
+		/* DON'T TOUCH BELOW THIS */
+		
 		System.out.println("Parsing CacheFile");
 		InfGACachedVarEval eval = new InfGACachedVarEval(cacheFilePath);
 		System.out.println("Finished Parsing CacheFile and starting GA");
-		
-		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1.5,1.5,.5,2);
-		
+				
 		InfiniteGA ga = new InfiniteGA(eval, new InfGASoftMaxReproduce(temperature,mutation), new RatioKillWorst(), rfenum.allRFs, nGenerations);
 		eval.setInfGA(ga);
 		
