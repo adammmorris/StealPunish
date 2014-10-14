@@ -362,7 +362,7 @@ public class TBFSOptimizerExp {
 		
 		/* SET THIS TO RIGHT PARAMS FOR GAME */
 		
-		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-10,10,10,3);
+		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-10,10,10,2);
 		
 		/* DON'T TOUCH BELOW THIS */
 		

@@ -124,7 +124,7 @@ public class FSSMatchCaching {
 		// Share-reciprocate values
 		double[] rewards = {-.5,1.0,-.5,1.0,0.};
 		double[] paramset = {-10,10,10};
-		int nParams = 3;
+		int nParams = 2;
 		
 		this.nTries =  numTries;
 		this.nGames = 1000;

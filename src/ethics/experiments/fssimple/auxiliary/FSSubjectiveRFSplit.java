@@ -30,7 +30,7 @@ public class FSSubjectiveRFSplit implements ParameterizedRF{
 		for(GroundedSingleAction gsa : ja){
 			double nr = or.get(gsa.actingAgent);
 			if(gsa.action.actionName.equals(FSSimple.ACTIONSTEAL)){
-				if (FSSimple.stateNode(s)==0) nr += this.params[0];
+				if (FSSimple.stateNode(s)==0 || FSSimple.stateNode(s)==3) nr += this.params[0];
 				else nr += this.params[1];
 			}
 			else if(gsa.action.actionName.equals(FSSimple.ACTIONPUNISH)){
