@@ -3,4 +3,24 @@
 #PBS -e /dev/null
 #PBS -o /dev/null
 
-/gpfs/main/home/amm4/java/jdk1.8.0_05/bin/java -jar SP_FSS_2to2.jar "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/ShareReciprocate/ShareReciprocate14" .1 $SGE_TASK_ID .2
+# Set output file
+output_file = "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/StealPunish/TwoParams/SmallGenomeSpace/5/BT0";
+
+# Set run parameters
+row = $SGE_TASK_ID;
+lr = .1;
+probBackTurned = 0;
+
+# Set payoff matrix
+rwd_init = 1.0;
+rwd_initee = -1.0;
+rwd_respond = -.5;
+rwd_respondee = -2.5;
+
+# Set params
+params_min = -10;
+params_max = 10;
+params_step = 10;
+nParams = 2;
+
+/gpfs/main/home/amm4/java/jdk1.8.0_05/bin/java -jar FSS.jar  $SGE_TASK_ID .1 0 

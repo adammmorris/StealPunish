@@ -44,12 +44,13 @@ public class FSSubjectiveRFSplit implements ParameterizedRF{
 
 	@Override
 	public void setParameters(double[] params) {
-		this.params = params;
+		if (params.length == 2) this.params = new double[] {params[0], params[0], params[1]};
+		else this.params = params;
 	}
 
 	@Override
 	public int parameterSize() {
-		return 2;
+		return params.length;
 	}
 
 	@Override

@@ -4,8 +4,8 @@ import sys
 
 percentKept = 0.02
 
-path_GA = "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/ShareReciprocate/TwoParams/SmallGenomeSpace/BT35/GA.txt";
-path_CSV = "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/ShareReciprocate/TwoParams/SmallGenomeSpace/BT35/GA_parsed.csv";
+path_GA = "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/StealPunish/TwoParams/6/BT0/GA.txt";
+path_CSV = "/gpfs/main/home/amm4/git/generalResearch/output/GAOutput/StealPunish/TwoParams/6/BT0/GA_parsed.csv";
 
 def main():
 	writeCSVForCommon()

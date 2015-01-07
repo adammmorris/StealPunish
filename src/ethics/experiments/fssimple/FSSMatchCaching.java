@@ -30,11 +30,11 @@ import domain.stocasticgames.foragesteal.simple.FSSimplePOJR;
 import ethics.ParameterizedRFFactory;
 import ethics.experiments.fssimple.auxiliary.ConsantPsudoTermWorldGenerator;
 import ethics.experiments.fssimple.auxiliary.FSSimpleBTSG;
-import ethics.experiments.fssimple.auxiliary.FSSubjectiveRF;
 import ethics.experiments.fssimple.auxiliary.FSSubjectiveRFSplit;
 import ethics.experiments.fssimple.auxiliary.PseudoGameCountWorld;
 import ethics.experiments.fssimple.auxiliary.RNPseudoTerm;
 import ethics.experiments.fssimple.specialagents.OpponentOutcomeDBLStealthAgent;
+import ethics.experiments.tbforagesteal.TBFSOptimizerExp;
 import ethics.experiments.tbforagesteal.auxiliary.RFParamVarEnumerator;
 
 public class FSSMatchCaching {
@@ -62,7 +62,8 @@ public class FSSMatchCaching {
 	protected boolean								replaceResultsWithAvgOnly = true;
 		
 	/**
-	 * @param args
+	 * @param args Should be: [outputFile, row, learning-rate, probBackTurned, reward-initiator, reward-initiatee, reward-responder, reward-respondee, params-min, params-max, params-step, nParams].
+	 * 
 	 */
 	public static void main(String[] args) {
 		long start = System.nanoTime();
@@ -74,11 +75,11 @@ public class FSSMatchCaching {
 			System.exit(-1);
 		}*/
 		
-		if(args.length != 5){
+		/*if(args.length != 11){
 			System.out.println("Wrong format. For row cache use:\n\tpathToOutputDirectory cacheMatrixRow learningRate probBackTurned numTries" + 
 							   "\nFor grid compilation use:\n\tpathToOutputDirectory 0 learningRate probBackTurned numTries");
 			System.exit(-1);
-		}
+		}*/
 		
 		DPrint.toggleCode(284673923, false); //world printing debug code
 		DPrint.toggleCode(25633, false); //tournament printing debug code
@@ -87,8 +88,10 @@ public class FSSMatchCaching {
 		int row = Integer.parseInt(args[1])-1; // Why the -1? $SGE_TASK_ID is 1-indexed, but the Java arrays are 0-indexed
 		double lr = Double.parseDouble(args[2]);
 		double probBackTurned = Double.parseDouble(args[3]);
-		int numTries = Integer.parseInt(args[4]);
-		FSSMatchCaching mc = new FSSMatchCaching(lr,probBackTurned,numTries);
+		double[] rewards = {Double.parseDouble(args[4]),Double.parseDouble(args[5]),Double.parseDouble(args[6]),Double.parseDouble(args[7]),0};
+		double[] paramset = {Double.parseDouble(args[8]),Double.parseDouble(args[9]),Double.parseDouble(args[10])};
+		int nParams = Integer.parseInt(args[11]);
+		FSSMatchCaching mc = new FSSMatchCaching(lr,probBackTurned,rewards,paramset,nParams);
 		
 		System.out.println("Beginning");
 		
@@ -113,20 +116,20 @@ public class FSSMatchCaching {
 	}
 	
 	
-	public FSSMatchCaching(double learningRate, double probBackTurned, int numTries){
+	public FSSMatchCaching(double learningRate, double probBackTurned, double[] rewards, double[] paramset, int nParams){
 		/* PARAMETERS TO SET BEFORE RUNNING */
 		
 		// Steal-punish values
 		/*double[] rewards = {1.0,-1.0,-0.5,-2.5,0};
 		double[] paramset = {-10,10,10};
-		int nParams = 3;*/
+		int nParams = 2;*/
 		
 		// Share-reciprocate values
-		double[] rewards = {-.5,1.0,-.5,1.0,0.};
+		/*double[] rewards = {-.5,1.0,-.5,1.0,0.};
 		double[] paramset = {-10,10,10};
-		int nParams = 2;
+		int nParams = 2;*/
 		
-		this.nTries =  numTries;
+		this.nTries = 100;
 		this.nGames = 1000;
 
 		/* PARAMETERS NOT TO TOUCH */
@@ -134,23 +137,15 @@ public class FSSMatchCaching {
 		this.baseLearningRate = learningRate;
 		
 		this.rfParamSet = (new RFParamVarEnumerator(paramset[0],paramset[1],paramset[2],nParams)).allRFs;
-		//this.rfParamSet = (new RFParamVarEnumerator(0, 1., 1., 5)).allRFs;
-		//this.rfParamSet = (new RFParamVarEnumerator(0, 1., 1., 7)).allRFs;
-		
+
 		this.numVectors = this.rfParamSet.size();
 		
-		//this.objectiveReward = new FSSimpleJR();
 		this.objectiveReward = new FSSimpleJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]);
-		//this.nTries = 1000;
-		//this.rewardFactory = new FSSubjectiveRF.FSSubjectiveRFFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
+		
 		this.rewardFactory = new FSSubjectiveRFSplit.FSSubjectiveRFSplitFactory(new FSSimplePOJR(rewards[0],rewards[1],rewards[2],rewards[3],rewards[4]));
-		
-		//double probBackTurned = 0.2;
-		
+				
 		FSSimple dgen = new FSSimple(3);
 		this.domain = (SGDomain)dgen.generateDomain();
-		//JointActionModel jam = new FSSimpleJAM();
-		//JointActionModel jam = new FSSimpleBTJAM(probBackTurned);
 		JointActionModel jam = new FSSimpleBTSJAM(probBackTurned, probBackTurned);
 		
 		DiscreteStateHashFactory hashingFactory = new DiscreteStateHashFactory();
@@ -300,7 +295,9 @@ public class FSSMatchCaching {
 			System.exit(-1);
 		}
 		
-		
+		if (tasknum==maxTasknum) {
+			this.compileGridOutput(outputDirectoryPath, "Cache.txt");
+		}
 	}
 	
 	protected void compileGridOutput(String outputDirectoryPath, String cacheName){

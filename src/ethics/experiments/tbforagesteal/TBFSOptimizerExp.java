@@ -163,7 +163,7 @@ public class TBFSOptimizerExp {
 		
 		if(args.length != 5){
 			System.out.println("Error: Incorrect format");
-			System.out.println("\tnGAGenerations temperature cacheFileInput outputFilePath mutationRate");
+			System.out.println("\tnGAGenerations temperature cacheFileInput outputPath mutationRate");
 			System.exit(-1);
 		}
 		
