@@ -1,7 +1,7 @@
 %% ParseGridOutput
 
-path = '/home/amm4/git/TDRL/Human Test/Data/Analysis/Real Data v2/Take 2/ArApBrBpSE/';
-numParams = 4;
+path = '/home/amm4/git/generalResearch/Behavioral/Fiery Studies/Lit3/Params/';
+numParams = 2;
 numSubjects = length(subjMarkers);
 params = zeros(numSubjects,numParams+2);
 
