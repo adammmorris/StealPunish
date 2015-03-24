@@ -1,0 +1,6 @@
+source("~/git/generalResearch/code/ethicsHeatMaps.R");
+
+for (i in 1:8) {
+	setwd(c("/home/amm4/git/generalResearch/output/GAOutput/StealPunish/ESS/Rp_prime/",i,"a");
+	heatMapToImage("GA_parsed.csv","HeatMap_Temp20_Mut10");
+}

@@ -15,7 +15,7 @@ public class RFParamVarEnumerator {
 	
 	public static void main(String [] args){
 		//RFParamVarEnumerator rfenum = new RFParamVarEnumerator();
-		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(-1, 3, 1., 4);
+		RFParamVarEnumerator rfenum = new RFParamVarEnumerator(0, 10, 10, 3);
 		for(OptVariables v : rfenum.allRFs){
 			System.out.println(v);
 		}
@@ -37,14 +37,14 @@ public class RFParamVarEnumerator {
 	public void generate(int nParam){
 		
 		int n = (int)((upper-lower)/inc) + 1;
-		allRFs = new ArrayList<OptVariables>(n);
+		allRFs = new ArrayList<OptVariables>();
 		double [] params = new double[nParam];
 		this.recursivelyGenerateParams(params, 0, n);
 		
 	}
 	
 	protected void recursivelyGenerateParams(double [] params, int ind, int n){
-		for(int i = 0; i < n; i++){
+		for(int i = 0; i < n; i++){ // # of possible values for each param
 			params[ind] = lower + inc*i;
 			if(ind == params.length-1){
 				OptVariables vars = new OptVariables(params.clone());
