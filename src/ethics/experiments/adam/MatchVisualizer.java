@@ -122,7 +122,8 @@ public class MatchVisualizer extends JFrame {
 	private String firstState;
 	private List<String> thiefStates; // what to visualize
 	private List<String> punisherStates;
-	private ValueFunctionInitialization qinit;
+	private ValueFunctionInitialization qinit_thief;
+	private ValueFunctionInitialization qinit_pun;
 	boolean useSubjForQinit = false;
 
 	public MatchVisualizer(){
@@ -150,7 +151,8 @@ public class MatchVisualizer extends JFrame {
 		this.objectiveRF = new SP_JR(stealerReward, stealeeReward, punisherReward, punisheeReward);
 		//this.qinit = new SP_QInit(objectiveRF);
 		//this.useSubjForQinit = true;
-		this.qinit = new ValueFunctionInitialization.ConstantValueFunctionInitialization(0);
+		this.qinit_thief = new ValueFunctionInitialization.ConstantValueFunctionInitialization(10);
+		this.qinit_pun = new ValueFunctionInitialization.ConstantValueFunctionInitialization(10);
 		//this.qinit = space.getCoopEquilibriumQInit(new double[]{stealerReward,stealeeReward,punisherReward,punisheeReward}, this.discount);
 		
 		/* INITIALIZE */
@@ -514,16 +516,16 @@ public class MatchVisualizer extends JFrame {
 		AgentFactory a1Factory = new AgentFactoryWithSubjectiveReward(baseAgentFactory, a1SRF);
 		
 		if (this.useSubjForQinit) {
-			((SP_RFQInit)this.qinit).setSubjectiveRF(a0SRF); // doesn't matter which one we use - the same right now
+			//((SP_RFQInit)this.qinit).setSubjectiveRF(a0SRF); // doesn't matter which one we use - the same right now
 		}
 		
 		SGQLAgent agent0 = (SGQLAgent)a0Factory.generateAgent();
-		agent0.setQValueInitializer(this.qinit);
-		agent0.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
+		agent0.setQValueInitializer(this.qinit_thief);
+		//agent0.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
 		
 		SGQLAgent agent1 = (SGQLAgent)a1Factory.generateAgent();
-		agent1.setQValueInitializer(this.qinit);
-		agent1.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
+		agent1.setQValueInitializer(this.qinit_pun);
+		//agent1.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
 		
 		
 		World world = worldGenerator.generateWorld();

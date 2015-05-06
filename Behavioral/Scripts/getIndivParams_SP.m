@@ -1,4 +1,4 @@
-%% getIndivParams (in loss aversion project)
+%% getIndivParams (in steal-punish project)
 % This function finds the optimal individual parameters using the specified
 %   model
 % Uses patternsearch
