@@ -4,11 +4,11 @@
 #PBS -o /dev/null
 
 # Set output file
-output_file="/home/amm4/git/generalResearch/output/GAOutput/StealPunish/SymFM/Mem2/12/"
+output_file="/home/amm4/git/generalResearch/output/GAOutput/Testing/Moran/2/"
 
 # Set run parameters
 row=$SGE_TASK_ID
-lr=.25
+lr=.1
 probBackTurned=0
 
 # Set payoff matrix
@@ -20,11 +20,11 @@ rwd_respondee=-2.5
 # Set params
 nParams=2
 param1_min=0
-param1_max=10
-param1_step=10
+param1_max=2
+param1_step=2
 param2_min=0
-param2_max=10
-param2_step=10
+param2_max=1
+param2_step=1
 param3_min=0
 param3_max=10
 param3_step=10

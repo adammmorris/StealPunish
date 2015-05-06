@@ -59,7 +59,7 @@ public class MatchCaching {
 	
 	
 	
-	protected boolean								replaceResultsWithAvgOnly = true;
+	protected boolean								replaceResultsWithAvgOnly = false;
 		
 	/**
 	 * @param args Should be:
@@ -302,11 +302,11 @@ public class MatchCaching {
 		
 		SGQLAgent a1 = (SGQLAgent)factV1.generateAgent();
 		a1.setQValueInitializer(this.qInit);
-		a1.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
+		//a1.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
 		
 		SGQLAgent a2 = (SGQLAgent)factV2.generateAgent();
 		a2.setQValueInitializer(this.qInit);
-		a2.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
+		//a2.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
 		
 		PseudoGameCountWorld w1 = (PseudoGameCountWorld)this.worldGenerator.generateWorld();
 		a1.joinWorld(w1, this.fsAgentType);
@@ -321,11 +321,11 @@ public class MatchCaching {
 		
 		SGQLAgent a12 = (SGQLAgent)factV1.generateAgent();
 		a12.setQValueInitializer(this.qInit);
-		a12.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
+		//a12.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
 		
 		SGQLAgent a22 = (SGQLAgent)factV2.generateAgent();
 		a22.setQValueInitializer(this.qInit);
-		a22.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
+		//a22.setLearningRate(new ExponentialDecayLR(this.baseLearningRate, 0.999, 0.01));
 		
 		PseudoGameCountWorld w2 = (PseudoGameCountWorld)this.worldGenerator.generateWorld();
 		a22.joinWorld(w2, this.fsAgentType); //switch join order
