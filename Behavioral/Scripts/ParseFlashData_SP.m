@@ -1,5 +1,5 @@
 %% ID stuff
-%id=subjectid; clear subjectid;
+id=subject; clear subject;
 subjMarkers = getSubjMarkers(id);
 numSubjects = length(subjMarkers);
 
@@ -18,60 +18,66 @@ for thisSubj = 1:numSubjects
 end
 
 % Clean up
-clear index; clear numSubjects; clear thisSubj;
+clear index; clear thisSubj;
 
 %% Constants
 
 % Roles
-ROLE_THIEF = 1;
-ROLE_PUNISHER = 2;
-
-% Actions
-ACTION_S = 2;
-ACTION_NS = 1;
-ACTION_P = 2;
-ACTION_NP = 1;
+ROLE_THIEF = 0;
+ROLE_PUN = 1;
 
 % Opponents
-OPPNAME_APT = 'pun';
-OPPNAME_NP = 'suc';
-OPPNAME_ASS = 'con';
-OPPNAME_AS = 'non';
+OPP_INFLEXIBLE = 0;
+OPP_FLEXIBLE = 1;
+
+% Actions
+CHOICE_NOTHING = 0;
+CHOICE_ACTION = 1;
 
 %% Variables
-myActions = action; clear action;
-opponents = opponent; clear opponent;
-
-roles = zeros(length(id),1);
-for i = 1:length(id)
-    opp = opponents{i}(2:end);
-    if strcmp(opp,OPPNAME_APT) || strcmp(opp,OPPNAME_NP), roles(i) = ROLE_THIEF;
-    else roles(i) = ROLE_PUNISHER;
-    end
-end
-
-rewards1 = zeros(length(id),1);
-rewards2 = zeros(length(id),1);
-s = 1; s_prime = -1; c = -1; p = -3;
-curStealing = 1;
-for i = 1:length(id)
-    opp = opponents{i}(2:end);
-    if i == 1 || strcmp(opp,opponents{i-1}(2:end)) == 0, curStealing = 1; end
-    
-    if roles(i) == ROLE_THIEF
-        if myActions(i)==ACTION_S
-            rewards1(i) = s;
-            rewards2(i) = p*(strcmp(opp,OPPNAME_APT));
-        end
-    elseif roles(i) == ROLE_PUNISHER
-       stole = 0;
-       if strcmp(opp,OPPNAME_AS) || (strcmp(opp,OPPNAME_ASS) && curStealing)
-            rewards1(i) = s_prime;
-            stole = 1;
-       end
-       if myActions(i)==ACTION_P
-           rewards2(i) = c;
-           if stole == 1, curStealing = 0; end
-       end
-    end
-end
+% matchMarkers = ones(1);
+% curMatch = 1;
+% 
+% for thisDataPt = 2:length(id)
+%     if matchRound(thisDataPt) == 1
+%         curMatch = curMatch + 1;
+%         matchMarkers(curMatch) = thisDataPt;
+%     end
+% end
+% 
+% % For each match, figure out who opponent was
+% for thisMatch = 1:length(matchMarkers)
+%     % Get index
+%     if thisMatch < length(matchMarkers)
+%         index = matchMarkers(thisMatch):(matchMarkers(thisMatch + 1) - 1);
+%     else
+%         index = matchMarkers(thisMatch):length(id);
+%     end
+%     
+%     if condition(index(1)) == ROLE_PUN
+%         % Opponent's a thief
+%         
+%         % Did the person ever punish?
+%         if all(choice(index)==CHOICE_NOTHING)
+%             % Assign randomly
+%             if rand() < .5, opType(index) = OPP_FLEXIBLE;
+%             else opType(index) = OPP_INFLEXIBLE; end
+%         else
+%             if all(opChoice(index)==CHOICE_ACTION), opType(index) = OPP_INFLEXIBLE;
+%             else opType(index) = OPP_FLEXIBLE; end
+%         end
+%     else
+%         % Opponent is a punisher
+%         
+%         % Did the person steal more than once?
+%         if sum(choice(index)==CHOICE_ACTION) <= 1
+%             if rand() < .5, opType(index) = OPP_FLEXIBLE;
+%             else opType(index) = OPP_INFLEXIBLE; end
+%         else
+%             % Did the opponent punish more than once?
+%             if sum(opChoice(index)==CHOICE_ACTION) > 1, opType(index) = OPP_INFLEXIBLE;
+%             else opType(index) = OPP_FLEXIBLE;
+%             end
+%         end
+%     end
+% end

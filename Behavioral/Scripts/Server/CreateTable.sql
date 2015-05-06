@@ -1,0 +1,20 @@
+CREATE TABLE `adam`.`stealpunish` (
+`subject` VARCHAR( 100 ) NOT NULL DEFAULT '0',
+`datestamp` DATE NOT NULL DEFAULT '0000-00-00',
+`timestamp` TIME NOT NULL DEFAULT '00:00:00',
+`version` VARCHAR( 20 ) NOT NULL DEFAULT '',
+`condition` INT(5) NOT NULL DEFAULT '0',
+`opType` INT(5) NOT NULL DEFAULT '0',
+`opChoice` INT( 5 ) NOT NULL DEFAULT '0',
+`choice` INT( 5 ) NOT NULL DEFAULT '0',
+`payoffSubj1` INT( 5 ) NOT NULL DEFAULT '0',
+`payoffSubj2` INT( 5 ) NOT NULL DEFAULT '0',
+`payoffOpp1` INT( 5 ) NOT NULL DEFAULT '0',
+`payoffOpp2` INT( 5 ) NOT NULL DEFAULT '0',
+`rt` VARCHAR(10) NOT NULL DEFAULT '',
+`score` INT( 5 ) NOT NULL DEFAULT '0',
+`globalRound` INT( 5 ) NOT NULL DEFAULT '0',
+`matchRound` INT( 5 ) NOT NULL DEFAULT '0',
+`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+KEY(`id`)
+);

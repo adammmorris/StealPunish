@@ -56,11 +56,13 @@ public class SymFM implements SP_StateSpace {
 		return this.stateNames;
 	}
 	
+	// States on which it's the thief's turn
 	@Override
 	public List<String> getThiefStates() {
 		return this.thiefStates;
 	}
 	
+	// Punisher's turn
 	@Override
 	public List<String> getPunisherStates() {
 		return this.punisherStates;

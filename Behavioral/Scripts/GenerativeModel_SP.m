@@ -1,189 +1,181 @@
 %% GenerativeModel_SP
 
 %% Params
-% x: [lr, temp, steal bias, punish bias, gamma]
-% roles: 1 = thief, 2 = punisher
-% opponents: 'pun','suc','con','non'
-% myActions: 1 = do nothing, 2 = steal/punish
-% rewards1 = rewards from first half of round
-% rewards2 = rewards from second half of round
+% x: [lr, temp, gamma, steal bias, punish bias]
 % memory = memory of state space
 
-function [likelihood] = GenerativeModel_SP(x, roles, opponents, myActions, rewards1, rewards2, memory)
+%% Outputs
+% results: [id roles oppChoices choices reward1 reward2 matchRound]
+
+function [results] = GenerativeModel_SP(x, memory, epsilon, numAgents)
+
+if nargin < 4, numAgents = 1; end
+if nargin < 3, epsilon = .1; end
+if nargin < 2, memory = 2; end
+if nargin < 1, x=[.25 1 .95 0 0]; end
 
 %% ENVIRONMENT PARAMETERS
 
 % Info about his board
-numRounds = length(myActions);
-numRoles = 2;
+numMatches = 8;
+numRoundsPerMatch = 50;
+numRounds = numMatches*numRoundsPerMatch;
 numStates = 2^(memory+1);
 numActions = 2;
 
-% Data variables:
-% id, A1, S2, A2, Re
+s = 2;
+sprime = -2;
+c = -1;
+p = -5;
+
+results = zeros(numAgents*numRounds,7);
 
 %% AGENT PARAMETERS
 
-lr = x(1);
-temp = x(2);
-steal_bias = x(3);
-punish_bias = x(4);
-gamma = x(5);
+if size(x,1) == numAgents
+    lrs = x(:,1);
+    temps = x(:,2);
+    gammas = x(:,3);
+    steal_biases = x(:,4);
+    punish_biases = x(:,5);
+elseif size(x,1) == 1
+    lrs = repmat(x(1),numAgents,1);
+    temps = repmat(x(2),numAgents,1);
+    gammas = repmat(x(3),numAgents,1);
+    steal_biases = repmat(x(4),numAgents,1);
+    punish_biases = repmat(x(5),numAgents,1);
+end
 
-% Set up initial state/action preference matrix (actor) and initial value
-%   matrix (critic)
-Q0 = zeros(numStates,numActions,numRoles);
+% Set up Q0
+Q0 = zeros(numStates,numActions);
+init_bonus = 0;
 
 %% PLAY THE BOARD
 
-% Calculate likelihoods
-likelihood = 0;
-Q = Q0;
-
 % Roles
-ROLE_THIEF = 1;
-ROLE_PUNISHER = 2;
+ROLE_THIEF = 0;
+ROLE_PUNISHER = 1;
 
 % Actions
-ACTION_S = 2;
-ACTION_NS = 1;
-ACTION_P = 2;
-ACTION_NP = 1;
-
-% Opponents
-OPPNAME_APT = 'pun';
-OPPNAME_NP = 'suc';
-OPPNAME_ASS = 'con';
-OPPNAME_AS = 'non';
-
-oppAction = 0;
-curStealing = 0; % for ASS strategy
+CHOICE_NOTHING = 0;
+CHOICE_ACTION = 1;
+actionLabels = [CHOICE_NOTHING CHOICE_ACTION];
 
 % Initial states
-lastActions0_thief = zeros(memory,1);
-thiefTurn = 0;
-for i = 1:memory
-    if thiefTurn==0
-        lastActions0_thief(i) = ACTION_NP;
-        thiefTurn = 1;
-    else
-        lastActions0_thief(i) = ACTION_NS;
-        thiefTurn = 0;
+lastActions0 = zeros(memory,1);
+
+resultCounter = 1;
+
+for thisAgent = 1:numAgents
+    roles = round(rand(numMatches,1));
+    lr = lrs(thisAgent,1);
+    temp = temps(thisAgent,1);
+    gamma = gammas(thisAgent,1);
+    steal_bias = steal_biases(thisAgent,1);
+    punish_bias = punish_biases(thisAgent,1);
+    
+    for thisMatch = 1:numMatches
+        role = roles(thisMatch);
+        oppRole = -role+1;
+        
+        Q = Q0;
+        lastActions = lastActions0;
+        
+        if role==ROLE_THIEF
+            curState = getStateNum(role,lastActions);
+        else
+            curState = getStateNum(oppRole,lastActions); % start with opponent
+        end
+        
+        % Initialize better Q values
+        if role==ROLE_THIEF
+            states = [getStateNum(role,[0 0]) getStateNum(role,[0 1]) getStateNum(role,[1 0]) getStateNum(role,[1 1])];
+        else
+            states = [getStateNum(role,[1 0]) getStateNum(role,[1 1])];
+        end
+        Q(states,actionLabels==CHOICE_ACTION) = Q(states,actionLabels==CHOICE_ACTION)+init_bonus;
+        
+        for thisRound = 1:numRoundsPerMatch
+            % FIRST TURN
+            if role == ROLE_THIEF
+                % Do my action
+                probs = exp(temp*Q(curState,:))/sum(exp(temp*Q(curState,:)));
+                myAction = randsample(numActions,1,true,probs);
+%                 if rand() < epsilon
+%                     if Q(curState,1)==Q(curState,2),myAction=randsample(numActions,1);
+%                     else [~,myAction]=min(Q(curState,:)); end
+%                 else
+%                     [~,myAction] = max(Q(curState,:));
+%                 end
+                
+                reward1 = (s+steal_bias)*(actionLabels(myAction)==CHOICE_ACTION);
+                
+                lastActions = [actionLabels(myAction) lastActions(1:(end-1))];
+                newState = getStateNum(oppRole,lastActions);
+                
+                % Update
+                delta = reward1 + gamma*max(Q(newState,:)) - Q(curState,myAction);
+                Q(curState,myAction) = Q(curState,myAction) + lr*delta;
+                
+                %             for i = 1:memory
+                %                 Q(curState,lastActions(i)) = Q(curState,lastActions(i)) + (elig^(i-1))*lr*delta;
+                %             end
+            else
+                oppAction = find(actionLabels==CHOICE_ACTION);
+                lastActions = [actionLabels(oppAction) lastActions(1:(end-1))];
+                newState = getStateNum(role,lastActions);
+                
+                reward1 = sprime;
+                
+                % In opponent states, both actions are the same
+                for i = 1:2
+                    Q(curState,i) = Q(curState,i) + lr*(reward1 + gamma*max(Q(newState,:)) - Q(curState,i));
+                end
+            end
+            
+            curState = newState;
+            
+            % SECOND TURN
+            if role == ROLE_PUNISHER
+                % Do my action & update
+                probs = exp(temp*Q(curState,:))/sum(exp(temp*Q(curState,:)));
+                myAction = randsample(numActions,1,true,probs);
+%                 if rand() < epsilon
+%                     if Q(curState,1)==Q(curState,2),myAction=randsample(numActions,1);
+%                     else [~,myAction]=min(Q(curState,:)); end
+%                 else
+%                     [~,myAction] = max(Q(curState,:));
+%                 end
+                
+                reward2 = c*(actionLabels(myAction)==CHOICE_ACTION)+punish_bias*(actionLabels(myAction)==CHOICE_ACTION & lastActions(1)==CHOICE_ACTION);
+                
+                lastActions = [actionLabels(myAction) lastActions(1:(end-1))];
+                newState = getStateNum(oppRole,lastActions);
+                
+                delta = reward2 + gamma*max(Q(newState,:)) - Q(curState,myAction);
+                Q(curState,myAction) = Q(curState,myAction) + lr*delta;
+                %             for i = 1:memory
+                %                 Q(curState,lastActions(i)) = Q(curState,lastActions(i)) + (elig^(i-1))*lr*delta;
+                %             end
+            else
+                oppAction = myAction;
+                lastActions = [actionLabels(oppAction) lastActions(1:(end-1))]; % punisher does whatever simulated thief did (action or nothing)
+                newState = getStateNum(role,lastActions);
+                
+                reward2 = p*(lastActions(1) == CHOICE_ACTION);
+                
+                % In opponent states, both actions are the same
+                for i = 1:2
+                    Q(curState,i) = Q(curState,i) + lr*(reward2 + gamma*max(Q(newState,:)) - Q(curState,i));
+                end
+            end
+            
+            curState = newState;
+            
+            % Record results
+            results(resultCounter,:) = [thisAgent role actionLabels(oppAction) actionLabels(myAction) reward1 reward2 thisRound];
+            resultCounter = resultCounter + 1;
+        end
     end
 end
-
-lastActions0_pun = zeros(memory,1);
-thiefTurn = 1;
-for i = 1:memory
-    if thiefTurn==0
-        lastActions0_pun(i) = ACTION_NP;
-        thiefTurn = 1;
-    else
-        lastActions0_pun(i) = ACTION_NS;
-        thiefTurn = 0;
-    end
-end
-
-curState = getStateNum(ROLE_THIEF,lastActions0_thief); % Initialize to all NSs & NPs - doesn't matter if _thief or _pun
-
-lastActions = zeros(memory,1);
-
-% Loop through each of the rounds
-for thisRound = 1:numRounds
-    % SETUP
-    
-    % What condition are we in? What opponent are we facing?
-    role = roles(thisRound); % 1 = thief, 2 = punisher
-    opponent = opponents{thisRound}(2:end);
-    
-    % Do we have a new opponent?
-    if thisRound == 1 || strcmp(opponent,opponents{thisRound-1}(2:end)) == 0
-        if strcmp(opponent,OPPNAME_ASS) == 1
-            curStealing = 1;
-        end
-        
-        if role == ROLE_THIEF
-            lastActions = lastActions0_thief;
-        else
-            lastActions = lastActions0_pun;
-        end
-    end
-    
-    % FIRST TURN
-    
-    reward1 = rewards1(thisRound);
-    
-    if role == ROLE_THIEF
-        % Do my action
-        myAction = myActions(thisRound); % should be 2 for steal/punish, 1 for do nothing
-        lastActions = [myAction lastActions(1:(end-1))];
-        newState = getStateNum(role,lastActions);
-        
-        reward1 = reward1 + steal_bias*(myAction==ACTION_S);
-
-        % Do likelihoods
-        probs = exp(temp*Q(curState,:,role))/sum(exp(temp*Q(curState,:,role)));
-        likelihood = likelihood + log(probs(myAction));
-        
-        % Update
-        Q(curState,myAction,role) = Q(curState,myAction,role) + lr*(reward1 + gamma*max(Q(newState,:,role)) - Q(curState,myAction,role));
-    else
-        % Do opponent's action & update
-        if (strcmp(opponent,OPPNAME_ASS) == 1 && curStealing == 1) || strcmp(opponent,OPPNAME_AS) == 1
-            oppAction = ACTION_S;
-        else
-            oppAction = ACTION_NS;
-        end
-        
-        lastActions = [oppAction lastActions(1:(end-1))];
-        newState = getStateNum(role,lastActions);
-        
-        % In opponent states, both actions are the same
-        for i = 1:2
-            Q(curState,i,role) = Q(curState,i,role) + lr*(reward1 + gamma*max(Q(newState,:,role)) - Q(curState,i,role));
-        end
-    end
-    
-    % SECOND TURN
-    reward2 = rewards2(thisRound);
-    
-    if role == ROLE_PUNISHER
-        % Do my action & update
-        myAction = myActions(thisRound); % should be 2 for steal/punish, 1 for do nothing
-        lastActions = [myAction lastActions(1:(end-1))];
-        newState = getStateNum(role,lastActions);
-
-        reward2 = reward2 + punish_bias*(myAction==ACTION_P & lastActions(1)==ACTION_S);
-        
-        % Do likelihoods
-        probs = exp(temp*Q(curState,:,role))/sum(exp(temp*Q(curState,:,role)));
-        likelihood = likelihood + log(probs(myAction));
-        
-        Q(curState,myAction) = Q(curState,myAction,role) + lr*(reward2 + gamma*max(Q(newState,:,role)) - Q(curState,myAction,role));
-       
-        % If ASS stole & was punished, turn off stealing
-        if strcmp(opponent,OPPNAME_ASS) && oppAction == ACTION_S && myAction == ACTION_P
-            curStealing = 0;
-        end
-    else
-        % Do opponent's action & update
-        if strcmp(opponent,OPPNAME_APT) == 1 && myAction == ACTION_S
-            oppAction = ACTION_P;
-        else
-            oppAction = ACTION_NP;
-        end
-        
-        lastActions = [oppAction lastActions(1:(end-1))];
-        newState = getStateNum(role,lastActions);
-        
-        % In opponent states, both actions are the same
-        for i = 1:2
-            Q(curState,i,role) = Q(curState,i,role) + lr*(reward2 + gamma*max(Q(newState,:,role)) - Q(curState,i,role));
-        end
-    end
-        
-    curState = newState;
-end
-
-likelihood = -likelihood; % for patternsearch (or fmincon)
 end

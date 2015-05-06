@@ -30,8 +30,8 @@ public class QTableVisualController {
 	List <StateActionSetTuple> 					agent0QueryStates;
 	List <StateActionSetTuple> 					agent1QueryStates;
 	
-	float										stateGroupHGap = 60f;
-	float										cellWidth = 60f;
+	float										stateGroupHGap = 20f;
+	float										cellWidth = 50f;
 	int											cellFontPointSize = 16;
 	int											colLabelFontPointSize = 14;
 	
@@ -75,7 +75,7 @@ public class QTableVisualController {
 		LandmarkColorBlendInterpolation colorBlend = new LandmarkColorBlendInterpolation();
 		colorBlend.addNextLandMark(minValue, Color.red);
 		colorBlend.addNextLandMark(0., Color.white);
-		colorBlend.addNextLandMark(maxValue, Color.blue);
+		colorBlend.addNextLandMark(maxValue, Color.cyan);
 		
 		float lm = 30;
 		float tm = 50;
@@ -98,7 +98,7 @@ public class QTableVisualController {
 		renderer.addLabel(a0QRowLabel);
 		this.setupTableRow(baseName, agent0QueryStates, colorBlend, startX, startY);
 		
-		startY += cellWidth;
+		/*startY += cellWidth;
 		baseName = "a0SR";
 		TableLabel a0SRRowLabel = new TableLabel("Subjective RF", colLabelFontPointSize, (int)(lm + (llm/2)), (int)(startY+(cellWidth/2)));
 		renderer.addLabel(a0SRRowLabel);
@@ -108,7 +108,7 @@ public class QTableVisualController {
 		baseName = "a0OR";
 		TableLabel a0ORRowLabel = new TableLabel("Objective RF", colLabelFontPointSize, (int)(lm + (llm/2)), (int)(startY+(cellWidth/2)));
 		renderer.addLabel(a0ORRowLabel);
-		this.setupTableRow(baseName, agent0QueryStates, colorBlend, startX, startY);
+		this.setupTableRow(baseName, agent0QueryStates, colorBlend, startX, startY);*/
 		
 		
 		
@@ -126,7 +126,7 @@ public class QTableVisualController {
 		renderer.addLabel(a1QRowLabel);
 		this.setupTableRow(baseName, agent1QueryStates, colorBlend, startX, startY);
 		
-		startY += cellWidth;
+		/*startY += cellWidth;
 		baseName = "a1SR";
 		TableLabel a1SRRowLabel = new TableLabel("Subjective RF", colLabelFontPointSize, (int)(lm + (llm/2)), (int)(startY+(cellWidth/2)));
 		renderer.addLabel(a1SRRowLabel);
@@ -136,7 +136,7 @@ public class QTableVisualController {
 		baseName = "a1OR";
 		TableLabel a1ORRowLabel = new TableLabel("Objective RF", colLabelFontPointSize, (int)(lm + (llm/2)), (int)(startY+(cellWidth/2)));
 		renderer.addLabel(a1ORRowLabel);
-		this.setupTableRow(baseName, agent1QueryStates, colorBlend, startX, startY);
+		this.setupTableRow(baseName, agent1QueryStates, colorBlend, startX, startY);*/
 		
 		
 	}
@@ -152,11 +152,11 @@ public class QTableVisualController {
 	public void updateRFValues(JointReward a0rf, JointReward a1rf){
 		this.setSubjectiveRFs(a0rf, a1rf);
 		
-		this.setupRFValues(agent0QueryStates, agent0Name, "a0OR", objectiveRF);
+		/*this.setupRFValues(agent0QueryStates, agent0Name, "a0OR", objectiveRF);
 		this.setupRFValues(agent1QueryStates, agent1Name, "a1OR", objectiveRF);
 		
 		this.setupRFValues(agent0QueryStates, agent0Name, "a0SR", subjectiveRFA0);
-		this.setupRFValues(agent1QueryStates, agent1Name, "a1SR", subjectiveRFA1);
+		this.setupRFValues(agent1QueryStates, agent1Name, "a1SR", subjectiveRFA1);*/
 		
 		
 	}

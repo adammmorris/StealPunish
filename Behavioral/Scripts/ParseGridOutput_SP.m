@@ -1,6 +1,6 @@
 %% ParseGridOutput
 
-path = '/home/amm4/git/generalResearch/Behavioral/Fiery Studies/Lit3/Params/';
+path = 'C:\Personal\School\Brown\Psychology\Thesis\Code\generalResearch\Behavioral\Fiery Studies\Lit3\Params\';
 numParams = 2;
 numSubjects = length(subjMarkers);
 params = zeros(numSubjects,numParams+2);

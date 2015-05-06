@@ -129,8 +129,8 @@ public class MatchCaching_ESS {
 		resultTable[3][2][1] = N*Rp;
 		resultTable[3][3][0] = 0;
 		resultTable[3][3][1] = 0;
-		resultTable[3][4][0] = Bp*(Rs+Rp_prime); // TRICKY
-		resultTable[3][4][1] = Bp*(Rs_prime+Rp);
+		resultTable[3][4][0] = Bp*(Rp_prime); // TRICKY
+		resultTable[3][4][1] = Bp*(Rp);
 
 		resultTable[4][0][0] = Bs*(Rs+Rp_prime);
 		resultTable[4][0][1] = Bs*(Rs_prime+Rp);

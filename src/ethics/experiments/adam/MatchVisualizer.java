@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import burlap.behavior.learningrate.ExponentialDecayLR;
 import burlap.behavior.singleagent.ValueFunctionInitialization;
@@ -129,7 +133,7 @@ public class MatchVisualizer extends JFrame {
 		/* SET PARAMETERS */
 		
 		stage = 0;
-		maxStage = 1000;
+		maxStage = 2500;
 		
 		// Payoff matrix
 		double stealerReward = 1;
@@ -519,11 +523,11 @@ public class MatchVisualizer extends JFrame {
 		
 		SGQLAgent agent0 = (SGQLAgent)a0Factory.generateAgent();
 		agent0.setQValueInitializer(this.qinit);
-		agent0.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
+		//agent0.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
 		
 		SGQLAgent agent1 = (SGQLAgent)a1Factory.generateAgent();
 		agent1.setQValueInitializer(this.qinit);
-		agent1.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
+		//agent1.setLearningRate(new ExponentialDecayLR(learningRate, 0.999, 0.01));
 		
 		
 		World world = worldGenerator.generateWorld();
@@ -603,7 +607,16 @@ public class MatchVisualizer extends JFrame {
 		double suma1 = 0.;
 		double lasta0 = 0.;
 		double lasta1 = 0.;
-		int nTrials = 100;
+		double numStatesTheft = 0;
+		double numStatesPun = 0;
+		int nTrials = 1000;
+		
+		double[] pctStatesTheft = new double[nTrials];
+		double[] pctStatesPun = new double[nTrials];
+		double[] gamesTheft = new double[nTrials];
+		double[] gamesPun = new double[nTrials];
+		double[] gamesBoth = new double[nTrials];
+		double[] gamesNeither = new double[nTrials];
 		for(int i = 0; i < nTrials; i++){
 			this.performMatch(a0SRParams, a1SRParams, subjectiveRFStorage);
 			lasta0 = this.ma.getObjectiveCumulativeReward(0);
@@ -611,6 +624,47 @@ public class MatchVisualizer extends JFrame {
 			
 			suma0 += lasta0;
 			suma1 += lasta1;
+			
+			numStatesTheft = 0;
+			numStatesPun = 0;
+			
+			for(StateActionSetTuple t : this.agent0QueryStates){
+				double q_s = 0;
+				double q_n = 0;
+				for(int j = 0; j < t.gas.size(); j++){
+					String al = t.actionLabels.get(j);
+					GroundedSingleAction ga = t.gas.get(j);
+					
+					if (al.equals("s")) q_s = this.ma.getQFor(0, maxStage, t.s, ga);
+					else q_n = this.ma.getQFor(0, maxStage, t.s, ga);
+				}
+				
+				if (q_s > q_n) numStatesTheft++;
+			}
+			
+			for(StateActionSetTuple t : this.agent1QueryStates){
+				double q_p = 0;
+				double q_q = 0;
+				for(int j = 0; j < t.gas.size(); j++){
+					String al = t.actionLabels.get(j);
+					GroundedSingleAction ga = t.gas.get(j);
+					
+					if (t.labelName.endsWith("s")) {
+						if (al.equals("p")) q_p = this.ma.getQFor(1, maxStage, t.s, ga);
+						else q_q = this.ma.getQFor(1, maxStage, t.s, ga);
+					}
+				}
+
+				if (q_p > q_q) numStatesPun++;
+			}
+			
+			pctStatesTheft[i] = numStatesTheft / 4;
+			pctStatesPun[i] = numStatesPun / 2;
+			
+			if (numStatesTheft==4 && numStatesPun!=2) gamesTheft[i] = 1;
+			else if (numStatesTheft!=4 && numStatesPun==2) gamesPun[i] = 1;
+			else if (numStatesTheft==4 && numStatesPun==2) gamesBoth[i] = 1;
+			else gamesNeither[i] = 1;
 		}
 		
 		
@@ -649,11 +703,124 @@ public class MatchVisualizer extends JFrame {
 		
 		this.updateStage();
 		
+		DescriptiveStatistics tStats = new DescriptiveStatistics(gamesTheft);
+		DescriptiveStatistics pStats = new DescriptiveStatistics(gamesPun);
+		DescriptiveStatistics bStats = new DescriptiveStatistics(gamesBoth);
+		DescriptiveStatistics nStats = new DescriptiveStatistics(gamesNeither);
 		
+		//System.out.println("Percent States Theft: "+tStats.getMean()+", "+tStats.getStandardDeviation()/Math.sqrt(nTrials));
+		//System.out.println("Percent States Pun: "+pStats.getMean()+", "+pStats.getStandardDeviation()/Math.sqrt(nTrials));
+		System.out.println("Games theft: "+tStats.getSum()+", "+tStats.getStandardDeviation() / Math.sqrt(nTrials));
+		System.out.println("Games pun: "+pStats.getSum()+", "+pStats.getStandardDeviation() / Math.sqrt(nTrials));
+		System.out.println("Games both: "+bStats.getSum()+", "+bStats.getStandardDeviation() / Math.sqrt(nTrials));
+		System.out.println("Games neither: "+nStats.getSum()+", "+nStats.getStandardDeviation() / Math.sqrt(nTrials));
 	}
 	
+	/**
+	 * 
+	 */
 	protected void saveToFile(){
+		String fileName = csvFileField.getText();
+		List<String> headers = new ArrayList<String>();
 		
+		// Get Q values for each stage
+		List<double[]> Qs = new ArrayList<double[]>();
+		String baseName = "";
+
+		for(StateActionSetTuple t : this.agent0QueryStates){
+			baseName = "ThiefQ_";
+			double[] Q_s = new double[maxStage];
+			double[] Q_n = new double[maxStage];
+			
+			for(int j = 0; j < t.gas.size(); j++){
+				String al = t.actionLabels.get(j);
+				GroundedSingleAction ga = t.gas.get(j);
+
+				for (int stage = 0; stage < maxStage; stage++) {
+					if (al.equals(SymFM.LETTERSTEAL)) Q_s[stage] = this.ma.getQFor(0, stage, t.s, ga);
+					else Q_n[stage] = this.ma.getQFor(0, stage, t.s, ga);
+				}
+			}
+
+			Qs.add(Q_s);
+			headers.add(baseName+t.labelName+SymFM.LETTERSTEAL);
+			Qs.add(Q_n);
+			headers.add(baseName+t.labelName+SymFM.LETTERNOSTEAL);
+			
+		}
+		
+		for(StateActionSetTuple t : this.agent1QueryStates){
+			baseName = "PunQ_";
+			double[] Q_p = new double[maxStage];
+			double[] Q_q = new double[maxStage];
+			
+			for(int j = 0; j < t.gas.size(); j++){
+				String al = t.actionLabels.get(j);
+				GroundedSingleAction ga = t.gas.get(j);
+
+				for (int stage = 0; stage < maxStage; stage++) {
+					if (al.equals(SymFM.LETTERPUNISH)) Q_p[stage] = this.ma.getQFor(1, stage, t.s, ga);
+					else Q_q[stage] = this.ma.getQFor(1, stage, t.s, ga);
+				}
+			}
+			
+			Qs.add(Q_p);
+			headers.add(baseName+t.labelName+SymFM.LETTERPUNISH);
+			Qs.add(Q_q);
+			headers.add(baseName+t.labelName+SymFM.LETTERNOPUNISH);
+		}
+		
+		// Get actions
+		List<int[]> cumActions = new ArrayList<int[]>();
+		baseName = "";
+		
+		int cumSteal[] = new int[maxStage];
+		int cumPun[] = new int[maxStage];
+		int curSteal = 0;
+		int curPun = 0;
+		for (int stage = 0; stage < maxStage; stage++) {
+			JointAction ja = ma.getJointActionAtTime(stage);
+	
+			if (ja.action(agent0Name).actionName()!="nothing") curSteal++;
+			if (ja.action(agent1Name).actionName()!="nothing") curPun++;
+			
+			cumSteal[stage] = curSteal;
+			cumPun[stage] = curPun;
+		}
+		
+		cumActions.add(cumSteal);
+		cumActions.add(cumPun);
+		
+		// Write to csv
+		try {
+			FileWriter writer = new FileWriter(fileName);
+			
+			// Do headers
+			/*for (int i = 0; i < headers.size(); i++) {
+				writer.append(headers.get(i));
+				if (i != (headers.size()-1)) writer.append(',');
+			}
+			writer.append('\n');*/
+			
+			// For each stage..
+			for (int stage = 0; stage < maxStage; stage++) {
+				/*for (int j = 0; j < Qs.size(); j++) {
+					writer.append(String.valueOf(Qs.get(j)[stage]));
+					if (j != (Qs.size()-1)) writer.append(',');
+				}*/
+				
+				writer.append(String.valueOf(cumActions.get(0)[stage]));
+				writer.append(',');
+				writer.append(String.valueOf(cumActions.get(1)[stage]));
+				writer.append('\n');
+			}
+			
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
 	}
 	
 	protected void incStage(){
@@ -710,6 +877,14 @@ public class MatchVisualizer extends JFrame {
 				sas.addAction(new GroundedSingleAction(agentNames[playerId], this.domain.getSingleAction(SP_Domain.ACTIONSTEAL), ""), "s");
 				res.add(sas);
 			}
+			for (int i = 0; i < this.punisherStates.size(); i++) {
+				State s = SP_Domain.getInitialState(this.domain, agentNames[0], agentNames[1], 0, this.firstState);
+				SP_Domain.setStateNode(s, this.punisherStates.get(i));
+				SP_Domain.setThiefTurn(s, 0);
+				StateActionSetTuple sas = new StateActionSetTuple(s, this.punisherStates.get(i));
+				sas.addAction(new GroundedSingleAction(agentNames[playerId], this.domain.getSingleAction(SP_Domain.ACTIONDONOTHING), ""), "n");
+				res.add(sas);
+			}
 		} else {
 			for (int i = 0; i < this.punisherStates.size(); i++) {
 				State s = SP_Domain.getInitialState(this.domain, agentNames[0], agentNames[1], 0, this.firstState);
@@ -718,6 +893,14 @@ public class MatchVisualizer extends JFrame {
 				StateActionSetTuple sas = new StateActionSetTuple(s, this.punisherStates.get(i));
 				sas.addAction(new GroundedSingleAction(agentNames[playerId], this.domain.getSingleAction(SP_Domain.ACTIONDONOTHING), ""), "q");
 				sas.addAction(new GroundedSingleAction(agentNames[playerId], this.domain.getSingleAction(SP_Domain.ACTIONPUNISH), ""), "p");
+				res.add(sas);
+			}
+			for (int i = 0; i < this.thiefStates.size(); i++) {
+				State s = SP_Domain.getInitialState(this.domain, agentNames[0], agentNames[1], 0, this.firstState);
+				SP_Domain.setStateNode(s, this.thiefStates.get(i));
+				SP_Domain.setThiefTurn(s, 1);
+				StateActionSetTuple sas = new StateActionSetTuple(s, this.thiefStates.get(i));
+				sas.addAction(new GroundedSingleAction(agentNames[playerId], this.domain.getSingleAction(SP_Domain.ACTIONDONOTHING), ""), "n");
 				res.add(sas);
 			}
 		}

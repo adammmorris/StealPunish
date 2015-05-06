@@ -1,0 +1,11 @@
+When punishment is costly:
+Stealing equilibrium - 80.4%
+Punishment equilibrium - 11.4%
+Both - 8.2%
+Neither - 0%
+
+When punishment is not costly:
+Stealing equilibrium - 3.4%
+Punishment equilibrium - 94.5%
+Both - 1.1%
+Neither - 1.0%
