@@ -66,7 +66,7 @@ public class MatchCaching {
 	 * [outputFile, row, learning-rate, probBackTurned,
 	 * reward-initiator, reward-initiatee, reward-responder, reward-respondee,
 	 * nParams, param1-min, param1-max, param1-step, param2-min, param2-max, param2-step, ...].
-	 * 
+	 * Qinit can be: 
 	 */
 	public static void main(String[] args) {
 		//long start = System.nanoTime();
@@ -114,7 +114,7 @@ public class MatchCaching {
 		int nParams = 2;*/
 		
 		this.nTries = 100;
-		this.nGames = 1000;
+		this.nGames = 5000;
 
 		double discount = 0.95;
 		
