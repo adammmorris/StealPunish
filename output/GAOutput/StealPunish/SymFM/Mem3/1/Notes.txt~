@@ -1,0 +1,20 @@
+GAME:
+Symmetric steal/punish
+Payoffs are 1,-1,-.5,-2.5
+probBackTurned = 0
+numTries = 100
+numGames = 1000
+
+STATE SPACE:
+SymFM, memory 3
+
+AGENT PARAMS:
+lr = .1
+gamma = .95
+qInit = 0
+min bias = 0, max bias = 10, paramStep = 10, numParams = 2
+
+ALGORITHM:
+numGenerations = 5000
+temp = 20
+mutation = 0

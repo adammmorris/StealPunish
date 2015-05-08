@@ -1,0 +1,32 @@
+1-4 STRUCTURE
+
+FSSMatchCaching (cacheOutputPath,learningRate)
+	MatchCaching mc = new MatchCaching(lr);
+		this.whoStartedItMechanicsAltInit(learningRate); // DOMAIN IS GENERATED
+	mc.cacheAll(outputFile);
+		this.getMatchResultString(v1, v2); // CACHE STRINGS ARE MADE
+			this.getAverageMatch(v1, v2);
+				runMatch(v1, v2); // MATCH HAPPENS
+
+TBSFOptimizerExp (generations,temperature,cacheFileInput,outputFilePath)
+	optimizationInfiniteGASoftMax(g,t,c,o)
+		runInfinteGASoftMax(g,t,c,o)
+			InfGACachedVarEval eval = new InfGACachedVarEval(c);
+				this.srcEval = new FullyCachedMatchEvaluation(c);
+					this.loadCacheFile(c); // PARSES CACHE FILE
+			RFParamVarEnumerator rfenum = new RFParamVarEnumerator(lower, upper, increment, numParams); // SETS PARAM SHIT
+			InfiniteGA ga = new InfiniteGA(eval, new InfGASoftMaxReproduce(t), new RatioKillWorst(), rfenum.allRFs, g);
+			eval.setInfGA(ga);
+			ga.optimize();
+
+FLOW
+
+(1) Compile latest Java code into .jar.  MAKE SURE PARAMS ARE CORRECT
+(2) Set MakeCache.sh (this is where probBackTurned is set)
+(3) In terminal, qsub -t 1-nVectors -o /dev/null -e /dev/null MakeCache.sh
+(4) In Eclipse, run FSSMatchCaching.java w/ cacheRow = 0 (to compile grid output)
+(5) In Eclipse, run TBFSOptimizerExp.java (to run GA; this is where temperature & mutation rate are set).  MAKE SURE PARAMS ARE CORRECT
+(6) In IDLE, set infGaSFParse.py to correct paths
+(7) In IDLE, run execfile('/home/amm4/git/generalResearch/code/infGaSFParse.py') (to parse GA output)
+(8) In R, run source("~/git/generalResearch/code/ethicsHeatMaps.R")
+(9) In R, run heatMapToImage("GA_parsed.csv","HeatMap_Temp20")

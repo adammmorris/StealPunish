@@ -1,0 +1,18 @@
+tbforagesteal.MatchCaching (cacheOutputPath,learningRate)
+	MatchCaching mc = new MatchCaching(lr);
+		this.whoStartedItMechanicsAltInit(learningRate); // DOMAIN IS GENERATED
+	mc.cacheAll(outputFile);
+		this.getMatchResultString(v1, v2); // CACHE STRINGS ARE MADE
+			this.getAverageMatch(v1, v2);
+				runMatch(v1, v2); // MATCH HAPPENS
+
+tbforagesteal.TBSFOptimizerExp (generations,temperature,cacheFileInput,outputFilePath)
+	optimizationInfiniteGASoftMax(g,t,c,o)
+		runInfinteGASoftMax(g,t,c,o)
+			InfGACachedVarEval eval = new InfGACachedVarEval(c);
+				this.srcEval = new FullyCachedMatchEvaluation(c);
+					this.loadCacheFile(c); // PARSES CACHE FILE
+			RFParamVarEnumerator rfenum = new RFParamVarEnumerator(lower, upper, increment, number); // SETS PARAM SHIT
+			InfiniteGA ga = new InfiniteGA(eval, new InfGASoftMaxReproduce(t), new RatioKillWorst(), rfenum.allRFs, g);
+			eval.setInfGA(ga);
+			ga.optimize();

@@ -1,0 +1,14 @@
+GAME:
+Payoffs are 0,-1,-.5,-2.5
+Bs = 5, Bp = 10
+probBackTurned = 0
+numGames = 1000
+
+AGENT PARAMS:
+min bias = 0, max bias = 4, paramStep = 1, numParams = 2
+These just represent the 5x5 matrix of 1-back strategies (plus learning)
+
+ALGORITHM:
+numGenerations = 5000
+temp = 20
+mutation = 0

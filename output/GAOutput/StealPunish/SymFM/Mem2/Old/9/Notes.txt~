@@ -1,0 +1,24 @@
+GAME:
+Symmetric steal/punish
+Payoffs are 1,-1,-.05,-2.5
+probBackTurned = 0
+numTries = 100
+numGames = 1000
+
+STATE SPACE:
+SymFM, memory 2
+
+AGENT PARAMS:
+lr = .1
+gamma = .95
+qInit = coop
+min bias = 0, max bias = 10, paramStep = 10, numParams = 4
+	Parameter 1 is steal bias | no punish last turn.
+	Parameter 2 is steal bias | punish last turn.
+	Parameter 3 is punish bias | no steal last turn.
+	Parameter 4 is punish bias | steal last turn.
+
+ALGORITHM:
+numGenerations = 5000
+temp = 20
+mutation = 0

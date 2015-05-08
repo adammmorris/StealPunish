@@ -1,0 +1,7 @@
+GAME:
+Symmetric steal/punish
+Payoffs are 1,-1,-.5,-2.5
+probBackTurned = 0
+
+STATE SPACE:
+

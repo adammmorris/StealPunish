@@ -1,0 +1,7 @@
+LS,AP vs LS,AP gets -1650
+LS,LP vs LS,AP gets -6000
+AS,AP vs LS,AP gets -6800
+
+AS,LP vs AS,LP gets -2245
+LS,LP vs AS,LP gets -6000
+AS,AP vs AS,LP gets -2455

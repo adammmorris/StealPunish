@@ -1,0 +1,22 @@
+GAME:
+Symmetric steal/punish
+Payoffs are 1,-1,-.5,-2.5
+probBackTurned = 0
+numTries = 100
+numGames = 1000
+
+STATE SPACE:
+Pavlov
+
+AGENT PARAMS:
+lr = .1
+gamma = .95
+qInit = zero
+min bias = 0, max bias = 10, paramStep = 10, numParams = 4
+	Parameters 1 and 2 are steal biases in states A and B
+	Parameters 3 and 4 are punish biases in states C and D
+
+ALGORITHM:
+numGenerations = 5000
+temp = 20
+mutation = 0

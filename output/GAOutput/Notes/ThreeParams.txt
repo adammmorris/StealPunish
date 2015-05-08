@@ -1,0 +1,22 @@
+STEAL-PUNISH
+
+Mut=0, BT=0: (-10,-10,10) some banding
+Mut=5: same, less banding
+Mut=10: (0,0,10) no banding
+Same for rest
+
+BT=5: (-10,0,10) some banding
+BT=10: same
+BT=15: (0,0,10) no banding
+Same for rest
+
+SHARE-RECIPROCATE
+
+Mut=0, BT=0: (0,10,10) lots of banding
+Mut=5: same, less banding
+Mut=10: (0,10,10) no banding
+Same for rest
+
+BT=5: tons of banding
+Same until..
+BT=20: (0,10,10) no banding
