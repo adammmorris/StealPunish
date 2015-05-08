@@ -34,9 +34,6 @@ public class MoranProcess {
 		int nGAGen = 100000;
 		double temperature = 20;
 		double mutation = .01;
-		double learningRate = .1;
-		double probBackTurned = 0;
-		double[] rewards = {1,-1,-.5,-2.5};
 		int nParams = 2;
 		
 		// Steal bias: lo hi inc

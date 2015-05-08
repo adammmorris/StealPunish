@@ -134,12 +134,12 @@ public class MatchVisualizer extends JFrame {
 		/* SET PARAMETERS */
 		
 		stage = 0;
-		maxStage = 2500;
+		maxStage = 10000;
 		
 		// Payoff matrix
 		double stealerReward = 1;
 		double stealeeReward = -1;
-		double punisherReward = -.5;
+		double punisherReward = -.05;
 		double punisheeReward = -2.5;
 		
 		// Probability of having your back turned
@@ -155,8 +155,8 @@ public class MatchVisualizer extends JFrame {
 		this.objectiveRF = new SP_JR(stealerReward, stealeeReward, punisherReward, punisheeReward);
 		//this.qinit = new SP_QInit(objectiveRF);
 		//this.useSubjForQinit = true;
-		this.qinit_thief = new ValueFunctionInitialization.ConstantValueFunctionInitialization(10);
-		this.qinit_pun = new ValueFunctionInitialization.ConstantValueFunctionInitialization(10);
+		this.qinit_thief = new ValueFunctionInitialization.ConstantValueFunctionInitialization(0);
+		this.qinit_pun = new ValueFunctionInitialization.ConstantValueFunctionInitialization(0);
 		//this.qinit = space.getCoopEquilibriumQInit(new double[]{stealerReward,stealeeReward,punisherReward,punisheeReward}, this.discount);
 		
 		/* INITIALIZE */
